@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useState, useMemo } from "react";
 import "../styles/Sidebar.module.css";
 import Logo from "../public/Logo.png";
+
 import {
   ReviewsIcon,
   CollapsIcon,
@@ -18,9 +19,23 @@ import Image from "next/image";
 const menuItems = [
   {
     id: 3,
-    label: "Pricing",
+    label: "Bookings",
     icon: PricingToolIcon,
-    link: "/pricingtools",
+    link: "/bookings",
+    sublinks: [],
+  },
+  {
+    id: 3,
+    label: "Games Management",
+    icon: PricingToolIcon,
+    link: "/gamemanagement",
+    sublinks: [],
+  },
+  {
+    id: 3,
+    label: "Revenue Management",
+    icon: PricingToolIcon,
+    link: "/revenuemanagement",
     sublinks: [],
   },
   {
@@ -32,9 +47,9 @@ const menuItems = [
   },
   {
     id: 6,
-    label: "Billing",
+    label: "Settings",
     icon: BillingIcon,
-    link: "/billing",
+    link: "/setting",
     sublinks: [],
   },
 ];

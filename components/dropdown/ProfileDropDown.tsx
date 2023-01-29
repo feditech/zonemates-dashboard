@@ -3,6 +3,7 @@ import { Button, Popover } from "@mui/material";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import { DropDownIcon } from "../icons/navbarIcons";
+import { LogoutIcon } from "../icons";
 const ProfileDropDown = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const profileOpen = Boolean(anchorEl);
@@ -38,17 +39,16 @@ const ProfileDropDown = () => {
         <ul className={"  p-4 text-grey "}>
           <li className={` border-grey border-b border-opacity-30`}>
             <button onClick={() => setAnchorEl(null)} className="p-2 ">
-              <Link href={"/pricingtools"}>
-                <p className=" ">X GameZone</p>
+              <Link href={"/profile"}>
+                <p className=" tracking-wider ">My Account</p>
               </Link>
             </button>
           </li>
 
           <li className={` `}>
-            <button onClick={() => setAnchorEl(null)} className="p-2 ">
-              <Link href={"/pricingtools"}>
-                <p className="font-medium text-red">Logout</p>
-              </Link>
+            <button onClick={() => setAnchorEl(null)} className="p-2 flex items-center space-x-2">
+              <LogoutIcon fill="red" />{" "}
+              <p className="font-medium text-red">Logout</p>
             </button>
           </li>
         </ul>

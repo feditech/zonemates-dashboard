@@ -13,8 +13,8 @@ const DashboardHeader:React.FC<DashboardHeaderPropType> = ({title}) => {
       </h1>
       <div className="flex">
        
-        <div className="flex flex-col justify-center items-center h-20 w-44 mx-2  border rounded-xl bg-secondary text-white">
-          <h1 className="flex gap-1 font-bold">
+        <div className="flex flex-col justify-center items-center h-20 py-1 w-48 mx-2  border rounded-xl bg-primary text-white">
+          <h1 className="flex font-bold">
             X GameZone 
           </h1>          
           <span >Gulshan Karachi</span>

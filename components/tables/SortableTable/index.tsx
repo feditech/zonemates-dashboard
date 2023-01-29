@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TableBody from "./TableBody";
 import TableHead from "./TableHead";
 import { useSortableTable } from "./useSortableTable";
-export interface LeadReportTablePropType {
+export interface SortableTablePropType {
   data?: any;
   columns?: any;
   hasBackgroundColor?:boolean;
@@ -10,7 +10,7 @@ export interface LeadReportTablePropType {
   hasBoxShadow?: boolean;
 }
 
-const LeadReportTable: React.FC<LeadReportTablePropType> = ({
+const SortableTable: React.FC<SortableTablePropType> = ({
   data,
   columns,
   hasBackgroundColor,
@@ -25,4 +25,4 @@ const LeadReportTable: React.FC<LeadReportTablePropType> = ({
   );
 };
 
-export default LeadReportTable;
+export default SortableTable;
