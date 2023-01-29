@@ -1,0 +1,13 @@
+.Sidebar::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+}
+.Sidebar::-webkit-scrollbar-button {
+    background: rgb(185, 45, 45) !important;
+}
+.Sidebar::-webkit-scrollbar-track-piece {
+    background: #000 !important;
+}
+.Sidebar::-webkit-scrollbar-thumb {
+    background: #000 !important;
+}
