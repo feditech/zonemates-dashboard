@@ -51,8 +51,8 @@ const AppleIcon = () => {
           y2="26.7804"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" stop-opacity="0.2" />
+          <stop offset="1" stopColor="white" stop-opacity="0" />
         </linearGradient>
       </defs>
     </svg>

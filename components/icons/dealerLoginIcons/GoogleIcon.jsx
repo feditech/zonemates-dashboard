@@ -17,8 +17,8 @@ const GoogleIcon = () => {
     <path opacity="0.2" d="M25 13.25C27.975 13.25 30.6829 14.3484 32.7793 16.1416L32.9235 16.0041L32.8134 15.9083C30.709 14.0844 28.0035 13 25 13C18.3726 13 13 18.3726 13 25C13 25.0422 13.0059 25.0829 13.0063 25.125C13.074 18.5558 18.4147 13.25 25 13.25Z" fill="white"/>
     <defs>
     <linearGradient id="paint0_linear_271_4584" x1="13" y1="25" x2="37" y2="25" gradientUnits="userSpaceOnUse">
-    <stop stop-color="white" stop-opacity="0.2"/>
-    <stop offset="1" stop-color="white" stop-opacity="0"/>
+    <stop stopColor="white" stop-opacity="0.2"/>
+    <stop offset="1" stopColor="white" stop-opacity="0"/>
     </linearGradient>
     </defs>
     </svg>
