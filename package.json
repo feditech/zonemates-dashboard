@@ -17,6 +17,8 @@
     "apexcharts": "^3.36.3",
     "chart.js": "^3.9.1",
     "classnames": "^2.3.2",
+    "firebase": "^9.16.0",
+    "formik": "^2.2.9",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -24,7 +26,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.6.0",
     "react-simple-star-rating": "^5.1.6",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "18.11.7",
