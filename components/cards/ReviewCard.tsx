@@ -33,7 +33,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       <div className="w-3/5">
         <div className="flex  space-x-5 items-center">
 
-          <Image alt="sleekride" height={50} width={50}   src={myimage} />
+          <Image alt ='zonemates' height={50} width={50}   src={myimage} />
          <div>
          <h1 className="-mb-2 text-lg font-semibold">{name}</h1>
          <Rating initialValue={starRating} size={20}  readonly={true} fillColor={'#E67136'}/>

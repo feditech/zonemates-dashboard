@@ -11,12 +11,13 @@ const data = {
   starRating: 5,
   reviewText:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sapien vitae nulla ac orci cras. Ut a, id blandit massa. Sed morbi mauris pulvinar et suspendisse tempus convallis massa. Justo, mi eleifend amet, feugiat ipsum. ",
-    companyName:'Toyota Canal Moters',
-    companyDesc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sapien vitae nulla ac orci cras. Ut a, id blandit massa. Sed morbi mauris pulvinar',
-  status:{
-    title:'Review is published',
-    desc:'Response has been published'
-  }
+  companyName: "Alina",
+  companyDesc:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sapien vitae nulla ac orci cras. Ut a, id blandit massa. Sed morbi mauris pulvinar",
+  status: {
+    title: "Review is published",
+    desc: "Response has been published",
+  },
 };
 
 const Reviews = () => {

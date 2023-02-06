@@ -42,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div
       className=" my-5 border-lightgrey border-2 rounded-xl shadow-lg">
         <div className="m-0 w-full  rounded-tl-xl flex ">
-            <Image alt="sleekride" height={700} width={500} src={myimage}   />
+            <Image alt ='zonemates' height={700} width={500} src={myimage}   />
             <div className="p-4 w-3/5">
                 <h1 className="text-lg font-semibold">{title}</h1>
                 <div className="flex justify-between">

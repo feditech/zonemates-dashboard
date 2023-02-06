@@ -1,10 +1,13 @@
-import React, { Fragment } from "react";
+import React, { useContext,Fragment } from "react";
 import { Button, Popover } from "@mui/material";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import { DropDownIcon } from "../icons/navbarIcons";
 import { LogoutIcon } from "../icons";
+import { AuthContext } from "../../store/AuthProvider/AuthProvider";
+import { Logout } from "../../Firebase";
 const ProfileDropDown = () => {
+  // const { setUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const profileOpen = Boolean(anchorEl);
   const handleClose = () => {
@@ -14,6 +17,10 @@ const ProfileDropDown = () => {
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
+  
+
+
 
   return (
     <>
@@ -46,7 +53,13 @@ const ProfileDropDown = () => {
           </li>
 
           <li className={` `}>
-            <button onClick={() => setAnchorEl(null)} className="p-2 flex items-center space-x-2">
+            <button
+              onClick={() => {
+                Logout();
+                setAnchorEl(null);
+              }}
+              className="p-2 flex items-center space-x-2"
+            >
               <LogoutIcon fill="red" />{" "}
               <p className="font-medium text-red">Logout</p>
             </button>

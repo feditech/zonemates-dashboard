@@ -9,10 +9,10 @@ import {
   ReviewsIcon,
   CollapsIcon,
   HomeIcon,
-  PricingToolIcon,
   ArrowUpIcon,
   ArrowDownIcon,
   BillingIcon,
+  GameManagementIcon
 } from "./icons";
 
 import Image from "next/image";
@@ -20,21 +20,21 @@ const menuItems = [
   {
     id: 3,
     label: "Bookings",
-    icon: PricingToolIcon,
+    icon: HomeIcon,
     link: "/bookings",
     sublinks: [],
   },
   {
     id: 3,
     label: "Games Management",
-    icon: PricingToolIcon,
+    icon: HomeIcon,
     link: "/gamemanagement",
     sublinks: [],
   },
   {
     id: 3,
     label: "Revenue Management",
-    icon: PricingToolIcon,
+    icon: HomeIcon,
     link: "/revenuemanagement",
     sublinks: [],
   },
@@ -60,11 +60,7 @@ const Sidebar = () => {
   const [isCollapsible, setIsCollapsible] = useState(false);
 
   const [toggleDashboard, setToggleDashboard] = useState(
-    "/" === router.pathname || "/dealer-insights" === router.pathname
-  );
-  const [toggleMarket, setToggleMarket] = useState(
-    "/high-demand-car" === router.pathname ||
-      "/local-searches" === router.pathname
+    "/dashboard" === router.pathname || "/dealer-insights" === router.pathname
   );
 
   const activeMenu = useMemo(() => {
@@ -112,7 +108,7 @@ const Sidebar = () => {
             >
               <div
                 className={` ${
-                  "/" === router.pathname ||
+                  "/dashboard" === router.pathname ||
                   "/dealer-insights" === router.pathname
                     ? "h-8 w-2 rounded-2xl bg-secondary absolute -left-4 "
                     : " hidden "
@@ -133,9 +129,9 @@ const Sidebar = () => {
               className={`flex flex-col ml-4 ${!toggleDashboard && "hidden"}  `}
             >
               <Link
-                href={"/"}
+                href={"/dashboard"}
                 className={`my-2 ml-2 pl-3 ${
-                  router.pathname == "/" &&
+                  router.pathname == "/dashboard" &&
                   "border-l-2 border-b-2  border-l-secondary border-b-secondary"
                 }`}
               >
@@ -143,52 +139,6 @@ const Sidebar = () => {
               </Link>
             </div>
           </div>
-
-          {/* <div>
-            <div
-              className="my-3 flex items-center  relative"
-              onClick={() => setToggleMarket(!toggleMarket)}
-            >
-              <div
-                className={` ${
-                  "/high-demand-car" === router.pathname ||
-                  "/local-searches" === router.pathname
-                    ? "h-8 w-2 rounded-2xl bg-secondary absolute -left-4 "
-                    : " hidden "
-                } `}
-              ></div>
-              <div
-                className="flex items-center justify-between w-full "
-                // onClick={() => setToggleMarket(!toggleMarket)}
-              >
-                <div className="flex items-center space-x-2 cursor-pointer">
-                  {<MarketAnalysis />}{" "}
-                  <span className="text-lg">Market Analysis</span>
-                </div>
-                {toggleMarket ? <ArrowUpIcon /> : <ArrowDownIcon />}
-              </div>
-            </div>
-            <div className={`flex flex-col ml-4 ${!toggleMarket && "hidden"}`}>
-              <Link
-                href={"/high-demand-car"}
-                className={`my-2 ml-2 pl-3 ${
-                  router.pathname == "/high-demand-car" &&
-                  "border-l-2 border-b-2  border-l-secondary border-b-secondary"
-                }`}
-              >
-                High Demand Car
-              </Link>
-              <Link
-                href={"/local-searches"}
-                className={`my-2 ml-2 pl-3 ${
-                  router.pathname == "/local-searches" &&
-                  "border-l-2 border-b-2  border-l-secondary border-b-secondary"
-                }`}
-              >
-                Local Searches
-              </Link>
-            </div>
-          </div> */}
 
           {menuItems.map((el, i) => {
             // console.log(el.link)

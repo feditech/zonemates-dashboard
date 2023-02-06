@@ -31,7 +31,7 @@ const TableBody = ({
             >
               {columns?.map(({ accessor }: any) => {
                 const tData = data[accessor] ? data[accessor] : "——";
-                console.log(accessor);
+                // console.log(accessor);
 
                 return (
                   <td
@@ -45,11 +45,11 @@ const TableBody = ({
                            <div className="flex space-x-1 items-center"> <span>{e.fbCount} </span> <Facebook /> </div> 
                            <div className="flex space-x-1 items-center"> <span>{e.mapCount}</span> <Map /> </div> 
                            <div className="flex space-x-1 items-center"> <span>{e.googleCount}</span> <Google /> </div> 
-                           <div className="flex space-x-1 items-center"> <span>{e.mentionCount}</span> <Image alt='sleekride' height={20} width={20}  src={mention.src} /> </div> 
-                           <div className="flex space-x-1 items-center"> <span>{e.messageCount}</span> <Image alt='sleekride' height={20} width={20}   src={message.src} /> </div> 
-                           <div className="flex space-x-1 items-center"> <span>{e.phoneCount}</span> <Image alt='sleekride' height={20} width={20}   src={dialer.src} /> </div> 
-                           <div className="flex space-x-1 items-center"> <span>{e.clickCount}</span> <Image alt='sleekride' height={20} width={20}   src={webvisit.src} /> </div> 
-                           <div className="flex space-x-1 items-center"> <span>{e.appCount}</span> <Image alt='sleekride' height={20} width={20}   src={mobile.src} /> </div> 
+                           <div className="flex space-x-1 items-center"> <span>{e.mentionCount}</span> <Image alt ='zonemates' height={20} width={20}  src={mention.src} /> </div> 
+                           <div className="flex space-x-1 items-center"> <span>{e.messageCount}</span> <Image alt ='zonemates' height={20} width={20}   src={message.src} /> </div> 
+                           <div className="flex space-x-1 items-center"> <span>{e.phoneCount}</span> <Image alt ='zonemates' height={20} width={20}   src={dialer.src} /> </div> 
+                           <div className="flex space-x-1 items-center"> <span>{e.clickCount}</span> <Image alt ='zonemates' height={20} width={20}   src={webvisit.src} /> </div> 
+                           <div className="flex space-x-1 items-center"> <span>{e.appCount}</span> <Image alt ='zonemates' height={20} width={20}   src={mobile.src} /> </div> 
                           </div>
                         );
                       })

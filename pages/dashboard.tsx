@@ -26,19 +26,19 @@ const InteractionSummary = () => {
   ];
   const series = [
     {
-      name: "Website Clicks",
+      name: "Gta V",
       data: [44, 55, 41, 67, 22, 43],
     },
     {
-      name: "Messages Leads",
+      name: "Apex Legends",
       data: [13, 23, 20, 44, 13, 27],
     },
     {
-      name: "App Clicks",
+      name: "Fortnite",
       data: [21, 17, 15, 15, 21, 33],
     },
     {
-      name: "Email Leads",
+      name: "Pubg ",
       data: [21,33, 25, 23, 22,22],
     },
   ];
@@ -104,13 +104,13 @@ const InteractionSummary = () => {
     },
     xaxis: {
       categories: [
-        "Jan 22",
-        "Feb 22",
-        "Mar 22",
-        "Apr 22",
-        "May 22",
-        "Jun 22",
-        "Jul 22",
+        "Jan 23",
+        "Feb 23",
+        "Mar 23",
+        "Apr 23",
+        "May 23",
+        "Jun 23",
+        "Jul 23",
       ],
       position: "bottom",
       axisBorder: {
@@ -204,7 +204,7 @@ const InteractionSummary = () => {
             <div className="mx-4">
               <h1 className="text-black font-bold  ">Interactions State Break Down</h1>
             </div>
-            <div className="flex space-x-4 ">
+            {/* <div className="flex space-x-4 ">
               <DropDown
                 title="Sort by"
                 options={dropDownOptions}
@@ -217,7 +217,7 @@ const InteractionSummary = () => {
                 style= {{width:156,height:35}}
            
               />
-            </div>
+            </div> */}
           </div>
           <ApexCustomChart
             options={options}
@@ -227,14 +227,14 @@ const InteractionSummary = () => {
           />
         </div>
 
-        <div className="text-black my-4 mt-10  border-lightgrey border-2 rounded-xl h-44">
+        {/* <div className="text-black my-4 mt-10  border-lightgrey border-2 rounded-xl h-44">
           <h1 className="font-bold p-4">
             Interactions Summary ( for last 8 months )
           </h1>
           <div className="flex justify-around items-center">
             <InfoSimpleCard
               count={151}
-              title="Email Leads"
+              title="Gta V"
               image={dashboard1.src}
               backgroundColor="blue"
             />
@@ -257,7 +257,7 @@ const InteractionSummary = () => {
               backgroundColor="purple"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

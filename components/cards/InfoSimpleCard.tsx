@@ -28,7 +28,7 @@ const InfoSimpleCard: React.FC<InfoSimpleCardProps> = ({
       >
         <div className="flex  ">
        
-          <Image height={30} width={30} alt ='sleekride' src={myimage} />
+          <Image height={30} width={30} alt ='zonemates' src={myimage} />
           <span className="text-white font-semibold text-xl">{count}</span>
         </div>
         <span className="text-white font-semibold">{title}</span>
