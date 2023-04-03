@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import Layout from "../components/Layout";
 import Image from "next/image";
@@ -6,7 +6,10 @@ import logo from "../public/banner1.png";
 import Game1 from "../public/game1.png";
 import Game2 from "../public/game4.jpg";
 import Game3 from "../public/game5.jpg";
+import { AppContext } from "../store/AppProvider/AppProvider";
 const Billing = () => {
+  const { userData } = useContext(AppContext);
+  console.log("USEr data", userData);
   return (
     <Layout>
       <div>
@@ -18,11 +21,9 @@ const Billing = () => {
 
               <div className="flex flex-col justify-center items-center w-1/3  ">
                 <h1 className="text-4xl font-bold text-center tracking-wide">
-                  ZANTZAONE
+                  {userData.name}
                 </h1>
-                <p className="text-grey text-center">
-                  The ultimate gaming platform
-                </p>
+                <p className="text-grey text-center">{userData.tagLine}</p>
               </div>
 
               <div className="flex justify-center ">
@@ -38,12 +39,7 @@ const Billing = () => {
               <aside className="w-1/3 p-10">
                 <div className="mb-10">
                   <h2 className="text-xl font-bold mb-5">About Gamezone</h2>
-                  <p>
-                    Gamezone is the leading online platform for all your gaming
-                    needs. We offer a wide range of games and gaming
-                    accessories, and provide a seamless gaming experience for
-                    gamers of all levels.{" "}
-                  </p>
+                  <p>{userData.aboutGameZone}</p>
                 </div>
                 <div className="mb-10">
                   <h2 className="text-xl font-bold mb-5">Our Services</h2>

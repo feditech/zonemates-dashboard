@@ -97,7 +97,9 @@ export {
   addDoc,
   onAuthStateChanged,
   Logout,
-  onSnapshot
+  onSnapshot,
+  setDoc,
+  doc
 };
 
 // async function signInWithPhoneNumber(phoneNumber) {

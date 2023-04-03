@@ -7,7 +7,7 @@ import { NotificationIcon } from "./icons/navbarIcons";
 import ProfileDropDown from "./dropdown/ProfileDropDown";
 const Navbar = () => {
   return (
-    <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 h-20 overflow-hidden dark:bg-gray-900  w-full">
+    <nav className="border-gray-200 px-2 sm:px-4 py-2.5 h-20 dark:bg-gray-900  w-full">
       <div className="flex flex-wrap  justify-between items-center ">
         <div className="flex items-center space-x-2">
           <p className="font-bold text-3xl">Admin Dashboard</p>

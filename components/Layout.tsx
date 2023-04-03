@@ -14,14 +14,21 @@ const Layout = ({ children }: any) => {
   }, [user]);
 
   return (
-    <div className="h-screen  flex flex-row justify-start ">
+    <div className="flex flex-row justify-start  ">
       <Sidebar />
-      <div className="flex flex-col w-full ">
+      <div className="flex flex-col w-full overflow-auto max-h-screen">
         <Navbar />
-        <div className="bg-white flex-1 p-4  overflow-auto ">{children}</div>
+        <div className="bg-white p-4  ">
+          {children}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Layout;
+
+{
+  /* <div className="flex flex-col w-full ">
+           </div> */
+}

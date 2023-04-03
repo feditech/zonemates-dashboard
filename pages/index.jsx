@@ -31,7 +31,7 @@ const Login = () => {
     }
   }, [user]);
   return (
-    <div className="p-10 flex  bg-[#F7FAF8]">
+    <div className="p-10 flex items-center min-h-screen  bg-[#F7FAF8]">
       {/* left */}
 
       <div className=" p-10  rounded-xl border-0 bg-[#FFF]  text-black w-full h-[initial] sm:p-4">
@@ -88,7 +88,7 @@ const Login = () => {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="bg-[#105E26] p-3 text-white w-full mt-2 rounded shadow-md shadow-[#105E26]"
+                  className="bg-primary p-3 text-white w-full mt-2 rounded shadow-md shadow-primary"
                 >
                   Login
                 </button>
@@ -98,25 +98,13 @@ const Login = () => {
         </Formik>
         <div className=" mt-6 ">
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            Don't have an Account?
-            <a href="/signup" className="text-[#105e26]">
+            Don't have an Account? {" "}
+            <a href="/signup" className="text-primary">
               Signup here{" "}
             </a>{" "}
           </p>
         </div>
-        <div className=" mt-6 ">
-          <h1 className="text-center text-md font-bold my-2">
-            Connect with Social
-          </h1>
-          <div className="flex justify-center space-x-4 my-2">
-            <FacebookIcon /> <GoogleIcon /> <AppleIcon />
-          </div>
-          <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            By signing in to your account, you agree to use
-            <a className="text-[#105e26]">ZoneMates </a> and
-            <a className="text-[#105e26]">Terms of Service. </a>
-          </p>
-        </div>
+        
       </div>
 
       {/* right */}

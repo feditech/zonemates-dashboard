@@ -1,7 +1,4 @@
-import React from "react";
 
-const BookingIcon = () => {
-  return (
     <svg
     width={24}
     height={24}
@@ -21,7 +18,4 @@ const BookingIcon = () => {
         />
       </g>
     </svg>
-  );
-};
 
-export default BookingIcon;

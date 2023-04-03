@@ -12,7 +12,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   BillingIcon,
-  GameManagementIcon
+  GameManagementIcon,
 } from "./icons";
 
 import Image from "next/image";
@@ -21,21 +21,21 @@ const menuItems = [
     id: 3,
     label: "Bookings",
     icon: HomeIcon,
-    link: "/bookings",
+    link: "/biling",
     sublinks: [],
   },
   {
     id: 3,
     label: "Games Management",
     icon: HomeIcon,
-    link: "/gamemanagement",
+    link: "/biling",
     sublinks: [],
   },
   {
     id: 3,
     label: "Revenue Management",
     icon: HomeIcon,
-    link: "/revenuemanagement",
+    link: "/biling",
     sublinks: [],
   },
   {
@@ -77,7 +77,7 @@ const Sidebar = () => {
   return (
     <div
       // className={wrapperClasses}
-      className={`Sidebar h-screen overflow-auto  px-4 pt-8 pb-4  thin-scroll bg-primary flex justify-between flex-col  ${
+      className={`Sidebar overflow-auto min-h-screen max-h-screen   px-4 pt-8 pb-4  thin-scroll bg-primary flex justify-between flex-col  ${
         !toggleCollapse && "w-80"
       } ${toggleCollapse && "w-20 justify-center"}    `}
       onMouseEnter={onMouseOver}
@@ -119,7 +119,7 @@ const Sidebar = () => {
                 // onClick={() => setToggleDashboard(!toggleDashboard)}
               >
                 <div className="flex items-center space-x-2 cursor-pointer">
-                  {<HomeIcon />}{" "}
+                  <HomeIcon />
                   <span className="text-lg w-full">Dashboard</span>
                 </div>
                 {toggleDashboard ? <ArrowUpIcon /> : <ArrowDownIcon />}

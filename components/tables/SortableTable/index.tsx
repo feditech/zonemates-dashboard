@@ -6,7 +6,6 @@ export interface SortableTablePropType {
   data?: any;
   columns?: any;
   hasBackgroundColor?:boolean;
-
   hasBoxShadow?: boolean;
 }
 
