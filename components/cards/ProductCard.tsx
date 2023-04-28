@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React ,{useState} from "react";
-import { TrendUp } from "../icons/analysisIcons";
+// import { TrendUp } from "../icons/analysisIcons";
 
 type ImageType={
     src?: string;
@@ -78,7 +78,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="my-5 flex">
         <div id='dealtype' className="flex flex-col items-center border-r-2 border-r-grey  w-1/5">
                 <h1>{dealType}</h1>
-                <TrendUp />
+                {/* <TrendUp /> */}
         </div>
         
         <div  className=" w-1/5 ml-10 ">

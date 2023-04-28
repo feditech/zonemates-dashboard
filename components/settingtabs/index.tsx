@@ -16,11 +16,11 @@ export default function VerticalTabs() {
           <li className=" " role="presentation" key={i}>
             <button
               onClick={() => setValue(i)}
-              className={`text-left py-5 font-bold text-md px-2 
+              className={`py-5 font-bold text-md px-2 shadow-md rounded-md w-32 text-center 
                 
                 ${
                   value == i
-                    ? "text-white  bg-primary shadow shadow-[#105e26]"
+                    ? "text-white  bg-primary  shadow-primary "
                     : " text-primary  bg-white"
                 } `}
             >

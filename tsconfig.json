@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/dropdown/DealRatingDropDown.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/dropdown/DealRatingDropDown.jsx", "components/settingtabs/SchedulerTab.jsx"],
   "exclude": ["node_modules"]
 }

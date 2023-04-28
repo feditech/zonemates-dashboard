@@ -1,4 +1,3 @@
-
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
@@ -6,14 +5,17 @@ import {
   addDoc,
   setDoc,
   doc,
-  onSnapshot
+  onSnapshot,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut 
+  signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import Router from "next/router";
 import { toast } from "react-toastify";
@@ -70,23 +72,22 @@ const userLogin = (values) => {
       Router.push("/dashboard");
     })
     .catch((error) => {
+      console.log("error", error);
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
+      toast(`Login Failed ${errorMessage}`);
+     
     });
 };
-const Logout = ()=>{
-  signOut(auth).then(() => {
-    logoutSuccessfullToast()
-  }).catch((error) => {
-    // An error happened.
-  });
-}
-
-
-
-
-
+const Logout = () => {
+  signOut(auth)
+    .then(() => {
+      logoutSuccessfullToast();
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+};
 
 export {
   auth,
@@ -94,12 +95,15 @@ export {
   userLogin,
   db,
   collection,
-  addDoc,
   onAuthStateChanged,
   Logout,
+  sendPasswordResetEmail,
   onSnapshot,
+  doc,
   setDoc,
-  doc
+  addDoc,
+  getDoc,
+  updateDoc,
 };
 
 // async function signInWithPhoneNumber(phoneNumber) {

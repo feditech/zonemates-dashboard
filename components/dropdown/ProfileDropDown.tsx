@@ -7,7 +7,6 @@ import { LogoutIcon } from "../icons";
 import { AuthContext } from "../../store/AuthProvider/AuthProvider";
 import { Logout } from "../../Firebase";
 const ProfileDropDown = () => {
-  // const { setUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const profileOpen = Boolean(anchorEl);
   const handleClose = () => {

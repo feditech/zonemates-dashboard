@@ -21,17 +21,20 @@ const Leads = () => {
     {
       title: "status",
     },
+    {
+      title: "actions",
+    },
   ];
 
   const { userData } = useContext(AppContext);
-  console.log("USEr data", userData?.bookings);
+  console.log("USEr data Booking", userData?.bookings);
 
   return (
     <Layout>
       <div>
         <DashboardHeader title="Bookings" />
         <div className="my-10">
-          <Table HeaderValues={HeaderValues} data={userData?.bookings} />
+          <Table HeaderValues={HeaderValues} data={userData} />
         </div>
       </div>
     </Layout>

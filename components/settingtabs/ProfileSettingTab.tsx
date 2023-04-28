@@ -8,17 +8,17 @@ import { toast } from "react-toastify";
 import { db, doc, setDoc } from "../../Firebase";
 const ProfileSettingTab = () => {
   const { userData } = useContext(AppContext);
-  const [zoneName, setZoneName] = useState(userData.name);
-  const [tagLine, setTagLine] = useState(userData.tagLine || "");
+  const [zoneName, setZoneName] = useState(userData?.name);
+  const [tagLine, setTagLine] = useState(userData?.tagLine || "");
   const [aboutGameZone, setAboutGameZone] = useState(
-    userData.aboutGameZone || ""
+    userData?.aboutGameZone || ""
   );
 
   const [latLng, setLatLng] = useState(
-    userData.latLng || { lat: 24.8607, lng: 67.0011 }
+    userData?.latLng || { lat: 24.8607, lng: 67.0011 }
   );
   const [center, setCenter] = useState(
-    userData.center || { lat: 24.8607, lng: 67.0011 }
+    userData?.center || { lat: 24.8607, lng: 67.0011 }
   );
 
   const handleInputChange = (event: any) => {

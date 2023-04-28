@@ -1,12 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
-import {
-  FacebookIcon,
-  GoogleIcon,
-  AppleIcon,
-} from "../components/icons/dealerLoginIcons";
-
 import banner from "../public/loginbanner.png";
 import { userLogin } from "../Firebase";
 import Router from "next/router";
@@ -25,7 +19,6 @@ const Login = () => {
   });
   const { user } = useContext(AuthContext);
   useEffect(() => {
-    console.log(user, "Usersssss");
     if (user) {
       Router.push("/dashboard");
     }
@@ -98,13 +91,17 @@ const Login = () => {
         </Formik>
         <div className=" mt-6 ">
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            Don't have an Account? {" "}
+            Don't have an Account?{" "}
             <a href="/signup" className="text-primary">
               Signup here{" "}
             </a>{" "}
           </p>
+          <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
+            <a href="/forgotPassword" className="text-primary">
+              Forgot Password?{" "}
+            </a>{" "}
+          </p>
         </div>
-        
       </div>
 
       {/* right */}
