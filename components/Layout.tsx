@@ -28,7 +28,4 @@ const Layout = ({ children }: any) => {
 
 export default Layout;
 
-{
-  /* <div className="flex flex-col w-full ">
-           </div> */
-}
+

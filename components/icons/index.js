@@ -1,4 +1,3 @@
-export { default as SleekRideLogoIcon } from "./SleekRideLogoIcon";
 export { default as ReviewsIcon } from "./ReviewsIcon";
 export { default as HomeIcon } from "./HomeIcon";
 export { default as MarketAnalysis } from "./MarketAnalysis";
@@ -11,7 +10,5 @@ export { default as LeadsIcon } from "./LeadsIcon";
 export { default as BillingIcon } from "./BillingIcon";
 export { default as GameManagementIcon } from "./GameManagementIcon";
 
-
-
-
-
+export { default as BookingIcon } from "./BookingIcon";
+export { default as SettingIcon } from "./SettingIcon";

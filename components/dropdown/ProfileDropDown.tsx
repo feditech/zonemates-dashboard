@@ -1,4 +1,4 @@
-import React, { useContext,Fragment } from "react";
+import React, { useContext, Fragment } from "react";
 import { Button, Popover } from "@mui/material";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
@@ -16,10 +16,6 @@ const ProfileDropDown = () => {
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
-
-  
-
-
 
   return (
     <>
@@ -46,7 +42,7 @@ const ProfileDropDown = () => {
           <li className={` border-grey border-b border-opacity-30`}>
             <button onClick={() => setAnchorEl(null)} className="p-2 ">
               <Link href={"/profile"}>
-                <p className=" tracking-wider ">My Account</p>
+                <p className=" tracking-wider ">My Profile</p>
               </Link>
             </button>
           </li>

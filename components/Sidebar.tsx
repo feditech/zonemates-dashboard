@@ -1,7 +1,6 @@
-import { Button } from "@mui/material";
+import React, { useState, useMemo,useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState, useMemo } from "react";
 import "../styles/Sidebar.module.css";
 import Logo from "../public/Logo.png";
 
@@ -13,42 +12,30 @@ import {
   ArrowDownIcon,
   BillingIcon,
   GameManagementIcon,
+  BookingIcon,
+  SettingIcon,
 } from "./icons";
 
 import Image from "next/image";
 const menuItems = [
   {
-    id: 3,
-    label: "Bookings",
+    id: 2,
+    label: "Dashboard",
     icon: HomeIcon,
-    link: "/bookings",
+    link: "/dashboard",
     sublinks: [],
   },
-  // {
-  //   id: 3,
-  //   label: "Games Management",
-  //   icon: HomeIcon,
-  //   link: "/biling",
-  //   sublinks: [],
-  // },
-  // {
-  //   id: 3,
-  //   label: "Revenue Management",
-  //   icon: HomeIcon,
-  //   link: "/biling",
-  //   sublinks: [],
-  // },
   {
-    id: 4,
-    label: "Reviews",
-    icon: ReviewsIcon,
-    link: "/reviews",
+    id: 3,
+    label: "Bookings",
+    icon: BookingIcon,
+    link: "/bookings",
     sublinks: [],
   },
   {
     id: 6,
     label: "Settings",
-    icon: BillingIcon,
+    icon: SettingIcon,
     link: "/setting",
     sublinks: [],
   },
@@ -56,17 +43,27 @@ const menuItems = [
 
 const Sidebar = () => {
   const router = useRouter();
-  const [toggleCollapse, setToggleCollapse] = useState(false);
+
   const [isCollapsible, setIsCollapsible] = useState(false);
 
-  const [toggleDashboard, setToggleDashboard] = useState(
-    "/dashboard" === router.pathname || "/dealer-insights" === router.pathname
+  const [toggleCollapse, setToggleCollapse] = useState(
+    localStorage.getItem('toggleCollapse') === 'false' ? false : true,
   );
 
-  const activeMenu = useMemo(() => {
-    menuItems;
-    return menuItems.find((menu) => menu.link === router.pathname);
-  }, [router.pathname]);
+  useEffect(() => {
+    localStorage.setItem('toggleCollapse', toggleCollapse.toString());
+  }, [toggleCollapse]);
+
+
+
+  const [toggleDashboard, setToggleDashboard] = useState(
+    "/dashboard" === router.pathname
+  );
+
+  // const activeMenu = useMemo(() => {
+  //   menuItems;
+  //   return menuItems.find((menu) => menu.link === router.pathname);
+  // }, [router.pathname]);
 
   const onMouseOver = () => {
     setIsCollapsible(!isCollapsible);
@@ -74,6 +71,7 @@ const Sidebar = () => {
   const handleSidebarToggle = () => {
     setToggleCollapse(!toggleCollapse);
   };
+  console.log("side bar re render", )
   return (
     <div
       // className={wrapperClasses}
@@ -87,59 +85,24 @@ const Sidebar = () => {
       <div className="flex flex-col  ">
         <div className="flex items-center justify-center relative">
           <div className="flex items-center pl-1  w-full justify-center ">
-            <Image height={20} width={150} alt="zonemates" src={Logo} />
+            {!toggleCollapse && (
+              <Image height={20} width={150} alt="zonemates" src={Logo} />
+            )}
           </div>
-          {/* {!isCollapsible && (
+          {isCollapsible && (
             <button
               // className={collapseIconClasses}
-              className={`p-4 rounded  bg-secondary  absolute right-0  ${toggleCollapse && 'rotate-180'}`}
+              className={`p-4 rounded   absolute right-0  ${
+                toggleCollapse && "rotate-180"
+              }`}
               onClick={handleSidebarToggle}
             >
               <CollapsIcon />
             </button>
-          )} */}
+          )}
         </div>
 
         <div className="flex flex-col  mt-24 list-none text-white">
-          <div>
-            <div
-              className="my-3 flex items-center  relative"
-              onClick={() => setToggleDashboard(!toggleDashboard)}
-            >
-              <div
-                className={` ${
-                  "/dashboard" === router.pathname ||
-                  "/dealer-insights" === router.pathname
-                    ? "h-8 w-2 rounded-2xl bg-secondary absolute -left-4 "
-                    : " hidden "
-                } `}
-              ></div>
-              <div
-                className="flex items-center justify-between w-full "
-                // onClick={() => setToggleDashboard(!toggleDashboard)}
-              >
-                <div className="flex items-center space-x-2 cursor-pointer">
-                  <HomeIcon />
-                  <span className="text-lg w-full">Dashboard</span>
-                </div>
-                {toggleDashboard ? <ArrowUpIcon /> : <ArrowDownIcon />}
-              </div>
-            </div>
-            <div
-              className={`flex flex-col ml-4 ${!toggleDashboard && "hidden"}  `}
-            >
-              <Link
-                href={"/dashboard"}
-                className={`my-2 ml-2 pl-3 ${
-                  router.pathname == "/dashboard" &&
-                  "border-l-2 border-b-2  border-l-secondary border-b-secondary"
-                }`}
-              >
-                Booking Summary
-              </Link>
-            </div>
-          </div>
-
           {menuItems.map((el, i) => {
             // console.log(el.link)
             return (
@@ -152,9 +115,12 @@ const Sidebar = () => {
                   <div
                     className={`h-8 w-2 rounded-2xl ${
                       el.link !== router.pathname && "hidden"
-                    } bg-[#105e26] absolute -left-4`}
+                    } bg-white absolute -left-4`}
                   ></div>
-                  {<el.icon />} <span className="text-lg">{el.label}</span>
+                  {<el.icon />}
+                  {!toggleCollapse && (
+                    <span className="text-lg">{el.label}</span>
+                  )}
                 </Link>
               )
             );

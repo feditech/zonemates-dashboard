@@ -26,20 +26,32 @@ const InteractionSummary = () => {
   ];
   const series = [
     {
-      name: "Gta V",
-      data: [44, 55, 41, 67, 22, 43],
+      name: "Monday",
+      data: [44, 55, 41, 67],
     },
     {
-      name: "Apex Legends",
-      data: [13, 23, 20, 44, 13, 27],
+      name: "Tuesday",
+      data: [44, 55, 41, 67],
     },
     {
-      name: "Fortnite",
-      data: [21, 17, 15, 15, 21, 33],
+      name: "Wednesday",
+      data: [44, 55, 41, 67],
     },
     {
-      name: "Pubg ",
-      data: [21,33, 25, 23, 22,22],
+      name: "Thursday",
+      data: [44, 55, 41, 67],
+    },
+    {
+      name: "Friday",
+      data: [44, 55, 41, 67],
+    },
+    {
+      name: "Saturday",
+      data: [44, 55, 41, 67],
+    },
+    {
+      name: "Sunday",
+      data: [44, 55, 41, 67],
     },
   ];
   var optimalColumnWidthPercent =
@@ -71,14 +83,16 @@ const InteractionSummary = () => {
       },
     },
     colors: [
-      // this array contains different color code for each data
-      "#407D3B",
-      "#F6C760",
-      "#B100CD",
-      "#3C43F2",
+      "#E74C3C", // red
+      "#F1C40F", // yellow
+      "#2ECC71", // green
+      "#3498DB", // blue
+      "#8E44AD", // purple
+      "#F39C12",
+      "#7FDBFF",
     ],
     grid: {
-      show: true, // you can either change hear to disable all grids
+      show: true, 
       xaxis: {
         lines: {
           show: true, //or just here to disable only x axis grids
@@ -93,7 +107,7 @@ const InteractionSummary = () => {
     dataLabels: {
       enabled: false,
       formatter: function (val: any) {
-        return val ;
+        return val;
         // return val + "k";
       },
       offsetY: -10,
@@ -103,15 +117,7 @@ const InteractionSummary = () => {
       },
     },
     xaxis: {
-      categories: [
-        "Jan 23",
-        "Feb 23",
-        "Mar 23",
-        "Apr 23",
-        "May 23",
-        "Jun 23",
-        "Jul 23",
-      ],
+      categories: ["Week 1", "Week 2", "Week 3", "Week 4"],
       position: "bottom",
       axisBorder: {
         show: false,
@@ -145,34 +151,43 @@ const InteractionSummary = () => {
       labels: {
         show: true,
         formatter: function (val: any) {
-          return val ;
+          return val;
           // return val + "k";
         },
       },
       min: 0,
-      max: 200,
-      tickAmount: 4,
+      max: 500,
+      tickAmount: 5,
     },
     legend: {
-      position: 'top',
+      position: "top",
       offsetX: -10,
       offsetY: 20,
-      horizontalAlign: 'start',
+      horizontalAlign: "start",
       markers: {
         width: 12,
         height: 12,
         radius: 12,
         offsetX: 0,
-        offsetY: -1
+        offsetY: -1,
+      },
     },
-    },
-    
   };
+
+  const countData = [
+    { title: "Monday", color: "#E74C3C", count: 23 },
+    { title: "Tuesday", color: "#F1C40F", count: 23 },
+    { title: "Wednesday", color: "#2ECC71", count: 23 },
+    { title: "Thursday", color: "#3498DB", count: 23 },
+    { title: "Friday", color: "#8E44AD", count: 23 },
+    { title: "Saturday", color: "#F39C12", count: 23 },
+    { title: "Sunday", color: "#7FDBFF", count: 23 },
+  ];
   return (
     <Layout>
       <div>
         <DashboardHeader title="Booking Summary" />
-        <div className="flex justify-between text-black my-2">
+        {/* <div className="flex justify-between text-black my-2">
           <InfoCard
             title="20.74 K"
             description="Total Bookings"
@@ -197,12 +212,14 @@ const InteractionSummary = () => {
             percentage={25}
             trend="down"
           />
-        </div>
+        </div> */}
 
         <div className="  w-full p-4 rounded-2xl shadow-lg my-4  text-black">
           <div className="my-3 flex justify-between ">
             <div className="mx-4">
-              <h1 className="text-black font-bold  ">Interactions State Break Down</h1>
+              <h1 className="text-black font-bold  ">
+                Weekly Bookings Break Down
+              </h1>
             </div>
             {/* <div className="flex space-x-4 ">
               <DropDown
@@ -227,37 +244,19 @@ const InteractionSummary = () => {
           />
         </div>
 
-        {/* <div className="text-black my-4 mt-10  border-lightgrey border-2 rounded-xl h-44">
-          <h1 className="font-bold p-4">
-            Interactions Summary ( for last 8 months )
-          </h1>
+        <div className="text-black my-4 mt-10  border-lightgrey border-2 rounded-xl h-44">
+          <h1 className="font-bold p-4">Daily Bookings Count</h1>
           <div className="flex justify-around items-center">
-            <InfoSimpleCard
-              count={151}
-              title="Gta V"
-              image={dashboard1.src}
-              backgroundColor="blue"
-            />
-            <InfoSimpleCard
-              count={151}
-              title="Messages Leads"
-              image={dashboard2.src}
-              backgroundColor="crayola"
-            />
-            <InfoSimpleCard
-              count={151}
-              title="Website Clicks"
-              image={dashboard3.src}
-              backgroundColor="secondary"
-            />
-            <InfoSimpleCard
-              count={151}
-              title="App Clicks"
-              image={dashboard4.src}
-              backgroundColor="purple"
-            />
+            {countData.map((e, i) => (
+              <InfoSimpleCard
+                key={i}
+                count={e.count}
+                title={e.title}
+                backgroundColor={e.color}
+              />
+            ))}
           </div>
-        </div> */}
+        </div>
       </div>
     </Layout>
   );

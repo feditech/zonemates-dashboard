@@ -5,7 +5,7 @@ import { TrendUp, TrendDown } from "../icons/dashboardIcons";
 export interface InfoSimpleCardProps {
   count?: number;
   title?: string;
-  image?: string  | undefined;
+  image?: string | undefined;
   backgroundColor?: string;
 }
 const InfoSimpleCard: React.FC<InfoSimpleCardProps> = ({
@@ -27,8 +27,9 @@ const InfoSimpleCard: React.FC<InfoSimpleCardProps> = ({
         } rounded-lg items-center justify-center`}
       >
         <div className="flex  ">
-       
-          <Image height={30} width={30} alt ='zonemates' src={myimage} />
+          {myimage && (
+            <Image height={30} width={30} alt="zonemates" src={myimage} />
+          )}
           <span className="text-white font-semibold text-xl">{count}</span>
         </div>
         <span className="text-white font-semibold">{title}</span>

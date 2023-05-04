@@ -60,11 +60,14 @@ const SchedulerTab = () => {
 
   // Event handler for handling changes in the opening and closing hours
   const handleHourChange = (day, field, value) => {
+    let hour = value.slice(0, 2)+':00:00';
+    console.log("valueee", value);
+    console.log("hour", hour+':00:00');
     setOpeningHours((prevOpeningHours) => ({
       ...prevOpeningHours,
       [day]: {
         ...prevOpeningHours[day],
-        [field]: value,
+        [field]: hour,
       },
     }));
   };
@@ -94,9 +97,15 @@ const SchedulerTab = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="w-1/4 py-2 px-4 text-left font-semibold">Day</th>
-              <th className="w-1/4 py-2 px-4 text-left font-semibold">Opening Time</th>
-              <th className="w-1/4 py-2 px-4 text-left font-semibold">Closing Time</th>
-              <th className="w-1/4 py-2 px-4 text-left font-semibold">Closed</th>
+              <th className="w-1/4 py-2 px-4 text-left font-semibold">
+                Opening Time
+              </th>
+              <th className="w-1/4 py-2 px-4 text-left font-semibold">
+                Closing Time
+              </th>
+              <th className="w-1/4 py-2 px-4 text-left font-semibold">
+                Closed
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -107,6 +116,7 @@ const SchedulerTab = () => {
                   <td className="py-2 px-4">
                     <input
                       type="time"
+                      step={3600}
                       value={openingHours[day].opening}
                       onChange={(e) =>
                         handleHourChange(day, "opening", e.target.value)
@@ -116,6 +126,7 @@ const SchedulerTab = () => {
                   <td className="py-2 px-4">
                     <input
                       type="time"
+                      step={3600}
                       value={openingHours[day].closing}
                       onChange={(e) =>
                         handleHourChange(day, "closing", e.target.value)

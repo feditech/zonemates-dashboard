@@ -108,7 +108,7 @@ const Billing = () => {
               </section>
             </main>
             <footer className="py-10 text-center text-sm">
-              &copy; 2023 Gamezone
+              &copy; 2023 Zone Mates
             </footer>
           </div>
         </div>
