@@ -59,33 +59,70 @@ const SchedulerTab = () => {
   }, []);
 
   // Event handler for handling changes in the opening and closing hours
-  const handleHourChange = (day, field, value) => {
-    let hour = value.slice(0, 2)+':00:00';
-    console.log("valueee", value);
-    console.log("hour", hour+':00:00');
-    setOpeningHours((prevOpeningHours) => ({
-      ...prevOpeningHours,
-      [day]: {
-        ...prevOpeningHours[day],
-        [field]: hour,
-      },
-    }));
-  };
+ // Event handler for handling changes in the opening and closing hours
+const handleHourChange = (day, field, value) => {
+  let hour = value.slice(0, 2) + ":00:00";
+  console.log("valueee", value);
+  console.log("hour", hour + ":00:00");
+  setOpeningHours((prevOpeningHours) => ({
+    ...prevOpeningHours,
+    [day]: {
+      ...prevOpeningHours[day],
+      [field]: hour,
+    },
+  }));
+};
+
 
   // Event handler for submitting form and saving opening hours to Firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Save data to Firebase
-      const docRef = doc(db, "users", userData.id); // Update document reference to use collection "users" and document ID from `userData.id`
+      const docRef = doc(db, "users", userData.id);
+      const slots = [];
+
+      Object.keys(openingHours).forEach((day) => {
+        const { opening, closing, closed } = openingHours[day];
+
+        if (!closed && opening && closing) {
+          let startTime = new Date();
+          let endTime = new Date();
+          const [openingHour, openingMin] = opening.split(":");
+          const [closingHour, closingMin] = closing.split(":");
+
+          startTime.setHours(Number(openingHour), Number(openingMin), 0, 0);
+          endTime.setHours(Number(closingHour), Number(closingMin), 0, 0);
+
+          const daySlots = [];
+
+          while (startTime < endTime) {
+            const slotTime = startTime.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            const slotDate = new Date().toLocaleDateString("en-US");
+            const slotId = `${slotDate} ${slotTime}`;
+
+            daySlots.push({ id: slotId, time: slotTime });
+
+            startTime.setMinutes(startTime.getMinutes() + 15);
+          }
+
+          slots.push({ day, slots: daySlots });
+        }
+      });
 
       await updateDoc(docRef, {
         openingHours: openingHours,
+        slots: slots,
       });
-      toast("Opening hours saved to Firebase!");
+      toast("Opening hours and slots saved to Firebase!");
     } catch (error) {
-      console.error("Error saving opening hours to Firebase: ", error);
+      console.error(
+        "Error saving opening hours and slots to Firebase: ",
+        error
+      );
     }
   };
 

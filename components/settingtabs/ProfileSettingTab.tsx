@@ -5,22 +5,80 @@ import Modal from "@mui/material/Modal";
 import Map from "../map";
 
 import { toast } from "react-toastify";
-import { db, doc, setDoc } from "../../Firebase";
+import {
+  db,
+  doc,
+  setDoc,
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "../../Firebase";
 const ProfileSettingTab = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const { userData } = useContext(AppContext);
   const [zoneName, setZoneName] = useState(userData?.name);
+  const [noOfPcs, setNoOfPcs] = useState(userData?.noOfPcs);
+  const [phoneNo, setPhoneNo] = useState(userData?.phoneNo);
   const [tagLine, setTagLine] = useState(userData?.tagLine || "");
   const [aboutGameZone, setAboutGameZone] = useState(
     userData?.aboutGameZone || ""
   );
-
   const [latLng, setLatLng] = useState(
     userData?.latLng || { lat: 24.8607, lng: 67.0011 }
   );
   const [center, setCenter] = useState(
     userData?.center || { lat: 24.8607, lng: 67.0011 }
   );
+  const [image, setImage] = useState(null);
 
+  const [services, setServices] = useState(
+    userData?.services ? userData?.services : []
+  );
+  const [topGames, setTopGames] = useState(
+    userData?.topGames ? userData?.topGames : []
+  );
+
+  const handleAddService = (event: any) => {
+    console.log("type of event", typeof event);
+    event.preventDefault();
+    const serviceInput = event.target.elements.service;
+    const newService = serviceInput.value.trim();
+    if (newService) {
+      setServices([...services, newService]);
+      serviceInput.value = "";
+    }
+  };
+  function handleRemoveService(serviceId: number) {
+    console.log("services", services);
+    console.log("serviceId", serviceId);
+    const updatedServices = services.filter(
+      (service: any, index: number) => index !== serviceId && service
+    );
+    console.log("updated", updatedServices);
+
+    setServices(updatedServices);
+  }
+
+  const handleAddGame = (event: any) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.elements.gameName.value;
+    const genre = form.elements.gameGenre.value;
+    const intro = form.elements.gameIntro.value;
+    const image = form.elements.image.files[0]; // access the uploaded file
+
+    setTopGames([...topGames, { name, genre, intro, image }]);
+    form.reset();
+  };
+
+  const handleRemoveGame = (index: any) => {
+    const updatedGames = [...topGames];
+    updatedGames.splice(index, 1);
+    setTopGames(updatedGames);
+  };
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setLatLng((prevLatLng: any) => ({
@@ -28,14 +86,22 @@ const ProfileSettingTab = () => {
       [name]: value,
     }));
   };
+  const handleImageUpload = (event: any) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+  };
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!zoneName) {
       toast("Invalid Zone Name");
+      return;
+    }
+    if (!noOfPcs) {
+      toast("Invalid No of PCs");
+      return;
+    }
+    if (!phoneNo) {
+      toast("Invalid Phone Number");
       return;
     }
     if (!tagLine) {
@@ -54,23 +120,79 @@ const ProfileSettingTab = () => {
       toast("Invalid Longitude");
       return;
     }
+    if (!services) {
+      toast("Add atleast 1 Service");
+      return;
+    }
 
+    const storage = getStorage();
     const updatedUser = {
       ...userData,
       zoneName,
+      noOfPcs,
       tagLine,
       aboutGameZone,
       latLng,
+      phoneNo,
+      services,
     };
 
-    console.log("this is user data", updatedUser);
-    setDoc(doc(db, "users", userData.id), updatedUser)
-      .then((e: any) => {
-        toast("success");
-      })
-      .catch((error: any) => {
-        toast("error");
-      });
+    if (topGames) {
+      let newTopgames = [];
+      console.log("top Gamess", topGames);
+      for (let i = 0; i < topGames.length; i++) {
+        const storageRef = ref(
+          storage,
+          `${userData.id}/topgames/${topGames[i].name}`
+        );
+        const uploadTask = uploadBytes(storageRef, topGames[i].image);
+
+        try {
+          await uploadTask;
+          const downloadURL = await getDownloadURL(storageRef);
+          let gameObj = {
+            name: topGames[i].name,
+            genre: topGames[i].genre,
+            intro: topGames[i].intro,
+            image: downloadURL,
+          };
+          newTopgames.push(gameObj);
+          console.log("top obj", updatedUser);
+        } catch (error) {
+          console.log(error);
+          toast("Error uploading image");
+          return;
+        }
+      }
+      updatedUser.topGames = newTopgames;
+      console.log("updated top games", updatedUser);
+    }
+
+    if (image) {
+      const storageRef = ref(
+        storage,
+        `profile_images/${userData.id}/${image.name}`
+      );
+      const uploadTask = uploadBytes(storageRef, image);
+
+      try {
+        await uploadTask;
+        const downloadURL = await getDownloadURL(storageRef);
+        updatedUser.profileImage = downloadURL;
+      } catch (error) {
+        console.log(error);
+        toast("Error uploading image");
+        return;
+      }
+    }
+
+    try {
+      await setDoc(doc(db, "users", userData.id), updatedUser);
+      toast("Profile updated successfully");
+    } catch (error) {
+      console.log(error);
+      toast("Error updating profile");
+    }
   };
 
   return (
@@ -80,19 +202,41 @@ const ProfileSettingTab = () => {
       role="tabpanel"
       aria-labelledby="tabs-home-tabVertical"
     >
-      <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
-        <label htmlFor="large-input" className="block text-xs  text-[#84879E] ">
-          Zone Name
-        </label>
-        <input
-          type="text"
-          id="large-input"
-          className="block w-full outline-none border-0 bg-transparent"
-          value={zoneName}
-          onChange={(e) => {
-            setZoneName(e.target.value);
-          }}
-        />
+      <div className="flex gap-4">
+        <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2 w-1/2">
+          <label
+            htmlFor="large-input"
+            className="block text-xs  text-[#84879E] "
+          >
+            Zone Name
+          </label>
+          <input
+            type="text"
+            id="large-input"
+            className="block w-full outline-none border-0 bg-transparent"
+            value={zoneName}
+            onChange={(e) => {
+              setZoneName(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
+          <label
+            htmlFor="large-input"
+            className="block text-xs  text-[#84879E] "
+          >
+            No # of PCs
+          </label>
+          <input
+            type="number"
+            id="large-input"
+            className="block w-full outline-none border-0 bg-transparent"
+            value={noOfPcs}
+            onChange={(e) => {
+              setNoOfPcs(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
         <label htmlFor="large-input" className="block text-xs  text-[#84879E] ">
@@ -121,6 +265,40 @@ const ProfileSettingTab = () => {
           }}
         />
       </div>
+
+      <div className="flex gap-4">
+        <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/3 rounded-lg p-2">
+          <label
+            htmlFor="large-input"
+            className="block text-xs  text-[#84879E] "
+          >
+            Phone
+          </label>
+          <input
+            type="text"
+            id="large-input"
+            className="block w-full outline-none border-0 bg-transparent"
+            value={phoneNo}
+            onChange={(e) => {
+              setPhoneNo(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/3 rounded-lg p-2">
+          <label
+            htmlFor="large-input"
+            className="block text-xs  text-[#84879E] "
+          >
+            Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleImageUpload(e)}
+          />
+        </div>
+      </div>
+
       <div className="flex gap-4">
         <div className="mb-6 w-1/3 text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
           <label
@@ -164,6 +342,148 @@ const ProfileSettingTab = () => {
         >
           Pick Location From Map
         </button>
+      </div>
+
+      <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
+        <label htmlFor="large-input" className="block text-xs  text-[#84879E] ">
+          Services
+        </label>
+        <form onSubmit={handleAddService} className="flex">
+          <input
+            type="text"
+            id="large-input"
+            name="service"
+            className="block outline-none border-0 bg-transparent mb-2"
+            placeholder="Add a new service"
+          />
+          <button
+            type="submit"
+            className="p-1  w-32 mb-2 bg-primary text-white justify-center items-center   text-center rounded-md  shadow-sm shadow-grey"
+          >
+            Add Service
+          </button>
+        </form>
+        <div className="flex flex-wrap">
+          {services?.map((service: any, index: any) => (
+            <div
+              key={index}
+              className="border border-[#D2D6DC] rounded-lg py-2 px-4 mr-2 mb-2
+              hover:bg-red-600 hover:text-white
+              "
+              onClick={() => handleRemoveService(index)}
+            >
+              {service}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
+        <label htmlFor="large-input" className="block text-xs  text-[#84879E] ">
+          Top Games
+        </label>
+        <form onSubmit={handleAddGame}>
+          <div className="flex gap-4">
+            <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/2 rounded-lg p-2">
+              <label
+                htmlFor="large-input"
+                className="block text-xs  text-[#84879E] "
+              >
+                Game Name:
+              </label>
+              <input
+                type="text"
+                id="gameName"
+                name="gameName"
+                required
+                className="block w-full outline-none border-0 bg-transparent mb-2"
+              />
+            </div>
+            <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/2 rounded-lg p-2">
+              <label
+                htmlFor="large-input"
+                className="block text-xs  text-[#84879E] "
+              >
+                Game Genre:
+              </label>
+              <input
+                type="text"
+                id="gameGenre"
+                name="gameGenre"
+                required
+                className="block w-full outline-none border-0 bg-transparent mb-2"
+              />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/2 rounded-lg p-2">
+              <label
+                htmlFor="large-input"
+                className="block text-xs  text-[#84879E] "
+              >
+                Game Intro:
+              </label>
+              <input
+                type="text"
+                id="gameIntro"
+                name="gameIntro"
+                required
+                className="block w-full outline-none border-0 bg-transparent mb-2"
+              />
+            </div>
+            <div className="mb-6  text-gray-900 border bg-[#F8FBFE] w-1/2 rounded-lg p-2">
+              <label
+                htmlFor="large-input"
+                className="block text-xs  text-[#84879E] "
+              >
+                Game Image:
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="p-2 bg-primary text-white w-1/5 mb-4 rounded-md shadow-sm shadow-grey"
+          >
+            Add Game
+          </button>
+        </form>
+        <div className="flex gap-4">
+          {topGames &&
+            topGames.map((game: any, index: any) => (
+              <div key={index}>
+                <h2>{game?.name}</h2>
+                <p>{game?.genre}</p>
+                <p>{game?.intro}</p>
+                {game?.image && (
+                  <img
+                    src={
+                      typeof game.image == "string"
+                        ? game.image
+                        : URL.createObjectURL(game?.image)
+                    }
+                    alt={game?.name}
+                    className="h-40 w-56"
+                  />
+                )}
+                <button
+                  className="border border-[#D2D6DC] rounded-lg py-2 px-4 mx-auto my-2
+              hover:bg-red-600 hover:text-white
+              "
+                  onClick={() => handleRemoveGame(index)}
+                >
+                  Remove Game
+                </button>
+              </div>
+            ))}
+        </div>
       </div>
 
       <div className="mb-6 flex justify-end">

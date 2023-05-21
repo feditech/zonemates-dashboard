@@ -27,31 +27,31 @@ const InteractionSummary = () => {
   const series = [
     {
       name: "Monday",
-      data: [44, 55, 41, 67],
+      data: [10, 12, 23, 5],
     },
     {
       name: "Tuesday",
-      data: [44, 55, 41, 67],
+      data: [14, 15, 21, 6],
     },
     {
       name: "Wednesday",
-      data: [44, 55, 41, 67],
+      data: [14, 15, 11, 17],
     },
     {
       name: "Thursday",
-      data: [44, 55, 41, 67],
+      data: [9, 15, 11, 17],
     },
     {
       name: "Friday",
-      data: [44, 55, 41, 67],
+      data: [4, 5, 16, 17],
     },
     {
       name: "Saturday",
-      data: [44, 55, 41, 67],
+      data: [14, 25, 21, 20],
     },
     {
       name: "Sunday",
-      data: [44, 55, 41, 67],
+      data: [24, 15, 12, 15],
     },
   ];
   var optimalColumnWidthPercent =
@@ -131,7 +131,7 @@ const InteractionSummary = () => {
           gradient: {
             colorFrom: "#D8E3F0",
             colorTo: "#BED1E6",
-            stops: [0, 100],
+            stops: [0, 10],
             opacityFrom: 0.4,
             opacityTo: 0.5,
           },
@@ -156,7 +156,7 @@ const InteractionSummary = () => {
         },
       },
       min: 0,
-      max: 500,
+      max: 150,
       tickAmount: 5,
     },
     legend: {

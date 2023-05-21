@@ -9,6 +9,8 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -76,7 +78,6 @@ const userLogin = (values) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       toast(`Login Failed ${errorMessage}`);
-     
     });
 };
 const Logout = () => {
@@ -104,6 +105,10 @@ export {
   addDoc,
   getDoc,
   updateDoc,
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
 };
 
 // async function signInWithPhoneNumber(phoneNumber) {

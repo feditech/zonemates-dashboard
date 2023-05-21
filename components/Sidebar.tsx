@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import "../styles/Sidebar.module.css";
@@ -47,14 +47,15 @@ const Sidebar = () => {
   const [isCollapsible, setIsCollapsible] = useState(false);
 
   const [toggleCollapse, setToggleCollapse] = useState(
-    localStorage.getItem('toggleCollapse') === 'false' ? false : true,
+    typeof window !== "undefined" &&
+      localStorage.getItem("toggleCollapse") === "false"
+      ? false
+      : true
   );
 
   useEffect(() => {
-    localStorage.setItem('toggleCollapse', toggleCollapse.toString());
+    localStorage.setItem("toggleCollapse", toggleCollapse.toString());
   }, [toggleCollapse]);
-
-
 
   const [toggleDashboard, setToggleDashboard] = useState(
     "/dashboard" === router.pathname
@@ -71,7 +72,7 @@ const Sidebar = () => {
   const handleSidebarToggle = () => {
     setToggleCollapse(!toggleCollapse);
   };
-  console.log("side bar re render", )
+  console.log("side bar re render");
   return (
     <div
       // className={wrapperClasses}

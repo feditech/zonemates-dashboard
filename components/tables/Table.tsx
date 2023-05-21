@@ -19,7 +19,6 @@ function LongMenu({ userId, bookings, bookingId }: any) {
   };
   const handleBooking = async (status: any) => {
     try {
-  
       // Save data to Firebase
       const docRef = doc(db, "users", userId); // Update document reference to use collection "users" and document ID from `userData.id`
       const bookingIndexToUpdate = bookings.findIndex(
@@ -83,7 +82,7 @@ const TableHead = ({ HeaderValues }: any) => {
 
   return (
     <div className="text-black p-2">
-      <ul className="flex justify-between items-center ">
+      <ul className="flex justify-between  items-center ">
         {HeaderValues?.map((el: any, index: React.Key) => (
           <li className="w-28 text-center" key={index}>
             {el.title}
@@ -97,14 +96,12 @@ const TableRow = ({
   index,
   date,
   name,
-  location,
-  status,
+  day,
   userId,
   bookingId,
-  bookings,
+  slot,
 }: any) => {
-
-  const timestamp = date.seconds + date.nanoseconds / 1e9;
+  const timestamp = date?.seconds + date?.nanoseconds / 1e9;
   const dateObj = new Date(timestamp * 1000); // convert seconds to milliseconds
   const dateString = dateObj.toLocaleString("en-US", {
     timeZone: "Asia/Karachi",
@@ -115,32 +112,23 @@ const TableRow = ({
       <ul className="flex justify-between items-center ">
         <li className="w-28 text-center">{index + 1}</li>
 
-        <li className="w-28 text-center">{dateString}</li>
+        {/* <li className="w-28 text-center">{dateString && dateString}</li> */}
 
         <li className="w-28 text-center">
           <div className="bg-[#FF9D9D] bg-opacity-20 h-10 w-full rounded-3xl p-2 flex justify-center items-center text-xs">
             {name}
           </div>
         </li>
-        <li className="w-28 text-center">{location}</li>
-        <li className="w-28 text-center">
-          <div
-            className={` ${
-              status == "pending" ? "bg-[#FF9D9D]" : "bg-[#88D79E]"
-            } bg-opacity-20 h-10 w-full rounded-3xl p-2 flex justify-center items-center text-xs`}
-          >
-            {status}
-          </div>
-        </li>
-        <li className="w-28 text-center">
+        <li className="w-28 text-center">{day}</li>
+        <li className="w-28 text-center">{slot}</li>
+        {/* <li className="w-28 text-center">
           <LongMenu userId={userId} bookings={bookings} bookingId={bookingId} />
-        </li>
+        </li> */}
       </ul>
     </div>
   );
 };
 const Table = (props: any) => {
-
   return (
     <div className="p-4 rounded-lg border border-lightgrey  w-full shadow-md">
       {/* table header */}
@@ -154,7 +142,8 @@ const Table = (props: any) => {
             index={index}
             date={el.date}
             name={el.name}
-            location={el.location}
+            day={el.day}
+            slot={el.slot}
             status={el.status}
             bookingId={el.bookingId}
             userId={props.data.id}

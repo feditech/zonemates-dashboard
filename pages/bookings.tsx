@@ -10,19 +10,13 @@ const Leads = () => {
       title: "id",
     },
     {
-      title: "date",
+      title: "Name",
     },
     {
-      title: "name",
+      title: "Day",
     },
     {
-      title: "location",
-    },
-    {
-      title: "status",
-    },
-    {
-      title: "actions",
+      title: "Slot",
     },
   ];
 
