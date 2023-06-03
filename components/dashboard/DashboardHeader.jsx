@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SupportIcon } from "../icons/dashboardIcons";
+import { AppContext } from "../../store/AppProvider/AppProvider";
 
-export interface DashboardHeaderPropType{
-title?:string
-}
 
-const DashboardHeader:React.FC<DashboardHeaderPropType> = ({title}) => {
+const DashboardHeader = ({ title }) => {
+
+  const { userData } = useContext(AppContext)
+  // console.log(userData)
   return (
     <div className="my-3 flex justify-between items-center ">
       <h1 className="text-black font-bold text-center px-2 text-xl ">
         {title}
       </h1>
       <div className="flex">
-       
+
         <div className="flex flex-col justify-center items-center h-20 py-1 w-48 mx-2  border rounded-xl bg-primary text-white">
           <h1 className="flex font-bold">
-            X GameZone 
-          </h1>          
+            {userData?.name}
+          </h1>
           <span >Gulshan Karachi</span>
-          <span >+92 311 2001020</span>
-      
+          <span >{userData?.phoneNo}</span>
+
         </div>
       </div>
     </div>

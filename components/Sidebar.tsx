@@ -5,13 +5,8 @@ import "../styles/Sidebar.module.css";
 import Logo from "../public/Logo.png";
 
 import {
-  ReviewsIcon,
   CollapsIcon,
   HomeIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  BillingIcon,
-  GameManagementIcon,
   BookingIcon,
   SettingIcon,
 } from "./icons";
@@ -61,21 +56,14 @@ const Sidebar = () => {
     "/dashboard" === router.pathname
   );
 
-  // const activeMenu = useMemo(() => {
-  //   menuItems;
-  //   return menuItems.find((menu) => menu.link === router.pathname);
-  // }, [router.pathname]);
-
   const onMouseOver = () => {
     setIsCollapsible(!isCollapsible);
   };
   const handleSidebarToggle = () => {
     setToggleCollapse(!toggleCollapse);
   };
-  console.log("side bar re render");
   return (
     <div
-      // className={wrapperClasses}
       className={`Sidebar overflow-auto min-h-screen max-h-screen   px-4 pt-8 pb-4  thin-scroll bg-primary flex justify-between flex-col  ${
         !toggleCollapse && "w-80"
       } ${toggleCollapse && "w-20 justify-center"}    `}

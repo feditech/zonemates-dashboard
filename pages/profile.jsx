@@ -44,7 +44,7 @@ const Billing = () => {
                 <div className="mb-10">
                   <h2 className="text-xl font-bold mb-5">Our Services</h2>
                   <ul className="list-disc">
-                    {userData?.services?.map((e: any, i: any) => (
+                    {userData?.services?.map((e, i) => (
                       <li key={i}>{e}</li>
                     ))}
                   </ul>
@@ -59,18 +59,21 @@ const Billing = () => {
               </aside>
               <section className="w-2/3 p-10">
                 <h2 className="text-xl font-bold mb-5">Top Games</h2>
-                {userData?.topGames.map((e: any, i: number) => (
-                  <div className="mb-10" key={i}>
-                    <img
-                      src={e.image}
-                      alt="Game 1"
-                      className="w-48 h-32 float-right mb-5 mx-2"
-                    />
-                    <h3 className="text-lg font-bold mb-3">{e.name}</h3>
-                    <p className="mb-3">Genre: {e.genre}</p>
-                    <p>{e.intro}</p>
-                  </div>
-                ))}
+                {userData?.topGames?.map((e, i) => {
+
+                  return (
+                    <div className="mb-10" key={i}>
+                      <img
+                        src={e.image}
+                        alt="Game 1"
+                        className="w-48 h-32 float-right mb-5 mx-2"
+                      />
+                      <h3 className="text-lg font-bold mb-3">{e.name}</h3>
+                      <p className="mb-3">Genre: {e.genre}</p>
+                      <p>{e.intro}</p>
+                    </div>
+                  )
+                })}
               </section>
             </main>
             <footer className="py-10 text-center text-sm">

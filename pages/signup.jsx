@@ -129,7 +129,7 @@ const Signup = () => {
           </p>
         </div>
         <div className=" mt-6 ">
-          <h1 className="text-center text-md font-bold my-2">
+          {/* <h1 className="text-center text-md font-bold my-2">
             Connect with Social
           </h1>
           <div className="flex justify-center space-x-4 my-2">
@@ -139,7 +139,7 @@ const Signup = () => {
             By signing in to your account, you agree to use
             <a className="text-[#105e26]">ZoneMates </a> and
             <a className="text-[#105e26]">Terms of Service. </a>
-          </p>
+                </p>*/}
         </div>
       </div>
 

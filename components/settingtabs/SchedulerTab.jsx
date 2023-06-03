@@ -1,38 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { AppContext } from "../../store/AppProvider/AppProvider";
-import { db, doc, setDoc, getDoc, updateDoc } from "../../Firebase"; // assuming you have imported and initialized your Firebase app as `db`
+import { db, doc, setDoc, getDoc, updateDoc } from "../../Firebase";
 import { toast } from "react-toastify";
+
 const SchedulerTab = () => {
   const { userData } = useContext(AppContext);
-  // State for storing the opening and closing hours for each day of the week
   const [openingHours, setOpeningHours] = useState({
-    Monday: { opening: "", closing: "", closed: false },
-    Tuesday: { opening: "", closing: "", closed: false },
-    Wednesday: { opening: "", closing: "", closed: false },
-    Thursday: { opening: "", closing: "", closed: false },
-    Friday: { opening: "", closing: "", closed: false },
-    Saturday: { opening: "", closing: "", closed: false },
-    Sunday: { opening: "", closing: "", closed: false },
-  });
+     });
 
-  // Fetch existing opening hours from Firebase on component mount
+  // console.log("User Data", userData?.openingHours)
+
   useEffect(() => {
     const fetchOpeningHours = async () => {
       try {
-        // Fetch data from Firebase
-        const docRef = doc(db, "users", userData.id); // Update document reference to use collection "users" and document ID from `userData.id`
+        const docRef = doc(db, "users", userData.id);
         const docSnap = await getDoc(docRef);
 
-        // Update state with fetched data or set default opening hours if data is undefined
         if (docSnap.exists() && docSnap?.data()?.openingHours) {
-          const openingHourFromFIrebase = docSnap?.data()?.openingHours;
+          const openingHourFromFirebase = docSnap?.data()?.openingHours;
           const formattedOpeningHours = Object.keys(openingHours).reduce(
             (acc, day) => {
               acc[day] = {
-                opening: openingHourFromFIrebase[day].opening,
-                closing: openingHourFromFIrebase[day].closing,
-                closed: openingHourFromFIrebase[day].closed,
+                opening: openingHourFromFirebase[day].opening,
+                closing: openingHourFromFirebase[day].closing,
+                closed: openingHourFromFirebase[day].closed,
               };
               return acc;
             },
@@ -41,13 +32,14 @@ const SchedulerTab = () => {
           setOpeningHours(formattedOpeningHours);
         } else {
           setOpeningHours({
-            Monday: { opening: "", closing: "", closed: false },
-            Tuesday: { opening: "", closing: "", closed: false },
-            Wednesday: { opening: "", closing: "", closed: false },
-            Thursday: { opening: "", closing: "", closed: false },
-            Friday: { opening: "", closing: "", closed: false },
-            Saturday: { opening: "", closing: "", closed: false },
-            Sunday: { opening: "", closing: "", closed: false },
+            Monday: { opening: "10:00", closing: "15:00", closed: false },
+            Tuesday: { opening: "10:00", closing: "15:00", closed: false },
+            Wednesday: { opening: "10:00", closing: "15:00", closed: false },
+            Thursday: { opening: "10:00", closing: "15:00", closed: false },
+            Friday: { opening: "10:00", closing: "15:00", closed: false },
+            Saturday: { opening: "10:00", closing: "15:00", closed: false },
+            Sunday: { opening: "10:00", closing: "15:00", closed: false },
+         
           });
         }
       } catch (error) {
@@ -58,71 +50,66 @@ const SchedulerTab = () => {
     fetchOpeningHours();
   }, []);
 
-  // Event handler for handling changes in the opening and closing hours
- // Event handler for handling changes in the opening and closing hours
-const handleHourChange = (day, field, value) => {
-  let hour = value.slice(0, 2) + ":00:00";
-  console.log("valueee", value);
-  console.log("hour", hour + ":00:00");
-  setOpeningHours((prevOpeningHours) => ({
-    ...prevOpeningHours,
-    [day]: {
-      ...prevOpeningHours[day],
-      [field]: hour,
-    },
-  }));
-};
+  const handleHourChange = (day, field, value) => {
+    let hour = value.slice(0, 2) + ":00"; // Extract only the hours and set minutes to 00
+    console.log("valueee", value);
+    console.log("hour", hour);
+    setOpeningHours((prevOpeningHours) => ({
+      ...prevOpeningHours,
+      [day]: {
+        ...prevOpeningHours[day],
+        [field]: hour,
+      },
+    }));
+  };
 
-
-  // Event handler for submitting form and saving opening hours to Firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     try {
       const docRef = doc(db, "users", userData.id);
       const slots = [];
-
       Object.keys(openingHours).forEach((day) => {
         const { opening, closing, closed } = openingHours[day];
-
         if (!closed && opening && closing) {
-          let startTime = new Date();
-          let endTime = new Date();
           const [openingHour, openingMin] = opening.split(":");
           const [closingHour, closingMin] = closing.split(":");
-
+          const startTime = new Date();
           startTime.setHours(Number(openingHour), Number(openingMin), 0, 0);
+          const endTime = new Date();
           endTime.setHours(Number(closingHour), Number(closingMin), 0, 0);
-
           const daySlots = [];
-
           while (startTime < endTime) {
-            const slotTime = startTime.toLocaleTimeString("en-US", {
+            const startSlotTime = startTime.toLocaleTimeString("en-US", {
               hour: "2-digit",
               minute: "2-digit",
+              timeZone: "Asia/Karachi",
             });
-            const slotDate = new Date().toLocaleDateString("en-US");
-            const slotId = `${slotDate} ${slotTime}`;
-
-            daySlots.push({ id: slotId, time: slotTime });
-
-            startTime.setMinutes(startTime.getMinutes() + 15);
+            startTime.setHours(startTime.getHours() + 1); // Increase the hour by 1
+            const endSlotTime = startTime.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: "Asia/Karachi",
+            });
+            const slotId = `${day}${startSlotTime.replace(/[:\s]/g, "")}`;
+            daySlots.push({
+              id: slotId,
+              time: `${startSlotTime} - ${endSlotTime}`,
+              remainingSlots: userData.noOfPcs,
+              day: day, // Add the day property to the slot object
+            });
           }
-
           slots.push({ day, slots: daySlots });
         }
       });
-
       await updateDoc(docRef, {
         openingHours: openingHours,
         slots: slots,
       });
+
       toast("Opening hours and slots saved to Firebase!");
     } catch (error) {
-      console.error(
-        "Error saving opening hours and slots to Firebase: ",
-        error
-      );
+      console.error("Error saving opening hours and slots to Firebase: ", error);
     }
   };
 
@@ -153,7 +140,6 @@ const handleHourChange = (day, field, value) => {
                   <td className="py-2 px-4">
                     <input
                       type="time"
-                      step={3600}
                       value={openingHours[day].opening}
                       onChange={(e) =>
                         handleHourChange(day, "opening", e.target.value)
@@ -163,7 +149,6 @@ const handleHourChange = (day, field, value) => {
                   <td className="py-2 px-4">
                     <input
                       type="time"
-                      step={3600}
                       value={openingHours[day].closing}
                       onChange={(e) =>
                         handleHourChange(day, "closing", e.target.value)

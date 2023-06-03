@@ -139,7 +139,6 @@ const ProfileSettingTab = () => {
 
     if (topGames) {
       let newTopgames = [];
-      console.log("top Gamess", topGames);
       for (let i = 0; i < topGames.length; i++) {
         const storageRef = ref(
           storage,
@@ -157,7 +156,6 @@ const ProfileSettingTab = () => {
             image: downloadURL,
           };
           newTopgames.push(gameObj);
-          console.log("top obj", updatedUser);
         } catch (error) {
           console.log(error);
           toast("Error uploading image");

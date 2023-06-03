@@ -3,7 +3,10 @@ import { onAuthStateChanged, auth, db } from "../../Firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
-export const AppContext = createContext();
+export const AppContext = createContext({
+  userData:null
+});
+
 
 const AppProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -11,8 +14,9 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      console.log("herre");
+     
       onSnapshot(doc(db, "users", user.uid), (doc) => {
+        console.log("get data from firebase",doc.data());
         setUserData(doc.data());
       });
     } else {
