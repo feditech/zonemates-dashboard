@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { SupportIcon } from "../icons/dashboardIcons";
-import { AppContext } from "../../store/AppProvider/AppProvider";
+import { AppContext } from "../../Context/AppProvider/AppProvider";
 
 
 const DashboardHeader = ({ title }) => {

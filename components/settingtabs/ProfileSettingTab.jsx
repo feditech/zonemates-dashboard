@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../../store/AppProvider/AppProvider";
+import { AppContext } from "../../Context/AppProvider/AppProvider";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Map from "../map";
@@ -14,6 +14,10 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "../../Firebase";
+import Image from "next/image";
+
+
+
 const ProfileSettingTab = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -21,6 +25,7 @@ const ProfileSettingTab = () => {
   const { userData } = useContext(AppContext);
   const [zoneName, setZoneName] = useState(userData?.name);
   const [noOfPcs, setNoOfPcs] = useState(userData?.noOfPcs);
+  const [feePerSlot, setFeePerSlot] = useState(userData?.feePerSlot);
   const [phoneNo, setPhoneNo] = useState(userData?.phoneNo);
   const [tagLine, setTagLine] = useState(userData?.tagLine || "");
   const [aboutGameZone, setAboutGameZone] = useState(
@@ -41,7 +46,7 @@ const ProfileSettingTab = () => {
     userData?.topGames ? userData?.topGames : []
   );
 
-  const handleAddService = (event: any) => {
+  const handleAddService = (event) => {
     console.log("type of event", typeof event);
     event.preventDefault();
     const serviceInput = event.target.elements.service;
@@ -51,18 +56,18 @@ const ProfileSettingTab = () => {
       serviceInput.value = "";
     }
   };
-  function handleRemoveService(serviceId: number) {
+  function handleRemoveService(serviceId) {
     console.log("services", services);
     console.log("serviceId", serviceId);
     const updatedServices = services.filter(
-      (service: any, index: number) => index !== serviceId && service
+      (service, index) => index !== serviceId && service
     );
     console.log("updated", updatedServices);
 
     setServices(updatedServices);
   }
 
-  const handleAddGame = (event: any) => {
+  const handleAddGame = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.elements.gameName.value;
@@ -74,30 +79,36 @@ const ProfileSettingTab = () => {
     form.reset();
   };
 
-  const handleRemoveGame = (index: any) => {
+  const handleRemoveGame = (index) => {
     const updatedGames = [...topGames];
     updatedGames.splice(index, 1);
     setTopGames(updatedGames);
   };
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setLatLng((prevLatLng: any) => ({
+    setLatLng((prevLatLng) => ({
       ...prevLatLng,
       [name]: value,
     }));
   };
-  const handleImageUpload = (event: any) => {
+  const handleImageUpload = (event) => {
     const selectedImage = event.target.files[0];
     setImage(selectedImage);
   };
 
   const handleSubmit = async () => {
+
+
     if (!zoneName) {
       toast("Invalid Zone Name");
       return;
     }
     if (!noOfPcs) {
       toast("Invalid No of PCs");
+      return;
+    }
+    if (!feePerSlot) {
+      toast("Invalid Fee per Slot");
       return;
     }
     if (!phoneNo) {
@@ -135,31 +146,34 @@ const ProfileSettingTab = () => {
       latLng,
       phoneNo,
       services,
+      feePerSlot
     };
 
     if (topGames) {
       let newTopgames = [];
       for (let i = 0; i < topGames.length; i++) {
-        const storageRef = ref(
-          storage,
-          `${userData.id}/topgames/${topGames[i].name}`
-        );
-        const uploadTask = uploadBytes(storageRef, topGames[i].image);
+        if (typeof topGames[i].image != 'string') {
+          const storageRef = ref(
+            storage,
+            `${userData.id}/topgames/${topGames[i].name}`
+          );
+          const uploadTask = uploadBytes(storageRef, topGames[i].image);
 
-        try {
-          await uploadTask;
-          const downloadURL = await getDownloadURL(storageRef);
-          let gameObj = {
-            name: topGames[i].name,
-            genre: topGames[i].genre,
-            intro: topGames[i].intro,
-            image: downloadURL,
-          };
-          newTopgames.push(gameObj);
-        } catch (error) {
-          console.log(error);
-          toast("Error uploading image");
-          return;
+          try {
+            await uploadTask;
+            const downloadURL = await getDownloadURL(storageRef);
+            let gameObj = {
+              name: topGames[i].name,
+              genre: topGames[i].genre,
+              intro: topGames[i].intro,
+              image: downloadURL,
+            };
+            newTopgames.push(gameObj);
+          } catch (error) {
+            console.log(error);
+            toast("Error uploading image");
+            return;
+          }
         }
       }
       updatedUser.topGames = newTopgames;
@@ -232,6 +246,23 @@ const ProfileSettingTab = () => {
             value={noOfPcs}
             onChange={(e) => {
               setNoOfPcs(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2">
+          <label
+            htmlFor="large-input"
+            className="block text-xs  text-[#84879E] "
+          >
+            Fees per slot
+          </label>
+          <input
+            type="number"
+            id="large-input"
+            className="block w-full outline-none border-0 bg-transparent"
+            value={feePerSlot}
+            onChange={(e) => {
+              setFeePerSlot(e.target.value);
             }}
           />
         </div>
@@ -362,7 +393,7 @@ const ProfileSettingTab = () => {
           </button>
         </form>
         <div className="flex flex-wrap">
-          {services?.map((service: any, index: any) => (
+          {services?.map((service, index) => (
             <div
               key={index}
               className="border border-[#D2D6DC] rounded-lg py-2 px-4 mr-2 mb-2
@@ -455,32 +486,36 @@ const ProfileSettingTab = () => {
         </form>
         <div className="flex gap-4">
           {topGames &&
-            topGames.map((game: any, index: any) => (
-              <div key={index}>
-                <h2>{game?.name}</h2>
-                <p>{game?.genre}</p>
-                <p>{game?.intro}</p>
-                {game?.image && (
-                  <img
-                    src={
-                      typeof game.image == "string"
-                        ? game.image
-                        : URL.createObjectURL(game?.image)
-                    }
-                    alt={game?.name}
-                    className="h-40 w-56"
-                  />
-                )}
-                <button
-                  className="border border-[#D2D6DC] rounded-lg py-2 px-4 mx-auto my-2
+            topGames.map((game, index) => {
+              return (
+                <div key={index}>
+                  <h2>{game?.name}</h2>
+                  <p>{game?.genre}</p>
+                  <p>{game?.intro}</p>
+                  {/* <Image alt={game?.name} src={game?.image} height={20} width={20} /> */}
+                  {game?.image && (
+                    <Image
+                      src={
+                        typeof game.image == "string"
+                          ? game.image
+                          : URL.createObjectURL(game?.image)
+                      }
+                      alt={game?.name}
+                      className="h-40 w-56"
+                      height={720} width={720}
+                    />
+                  )}
+                  <button
+                    className="border border-[#D2D6DC] rounded-lg py-2 px-4 mx-auto my-2
               hover:bg-red-600 hover:text-white
               "
-                  onClick={() => handleRemoveGame(index)}
-                >
-                  Remove Game
-                </button>
-              </div>
-            ))}
+                    onClick={() => handleRemoveGame(index)}
+                  >
+                    Remove Game
+                  </button>
+                </div>
+              )
+            })}
         </div>
       </div>
 

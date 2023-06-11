@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Settingtabs from "../components/settingtabs";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import Layout from "../components/Layout";
-import { AppContext } from "../store/AppProvider/AppProvider";
+import { AppContext } from "../Context/AppProvider/AppProvider";
 
 const Setting = () => {
   const { userData } = useContext(AppContext);

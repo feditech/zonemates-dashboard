@@ -16,7 +16,7 @@ const AppProvider = ({ children }) => {
     if (user) {
      
       onSnapshot(doc(db, "users", user.uid), (doc) => {
-        console.log("get data from firebase",doc.data());
+        // console.log("get data from firebase",doc.data());
         setUserData(doc.data());
       });
     } else {

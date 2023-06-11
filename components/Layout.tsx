@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Router from "next/router";
 
-import { AuthContext } from "../store/AuthProvider/AuthProvider";
+import { AuthContext } from "../Context/AuthProvider/AuthProvider";
 const Layout = ({ children }: any) => {
   const { user } = useContext(AuthContext);
 

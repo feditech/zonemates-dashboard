@@ -1,12 +1,8 @@
 import React, { useContext } from "react";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import Layout from "../components/Layout";
-import Image from "next/image";
 import logo from "../public/banner1.png";
-import Game1 from "../public/game1.png";
-import Game2 from "../public/game4.jpg";
-import Game3 from "../public/game5.jpg";
-import { AppContext } from "../store/AppProvider/AppProvider";
+import { AppContext } from "../Context/AppProvider/AppProvider";
 const Billing = () => {
   const { userData } = useContext(AppContext);
   console.log("USEr data", userData);

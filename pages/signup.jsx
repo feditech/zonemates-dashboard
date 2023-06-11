@@ -1,17 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
-import {
-  FacebookIcon,
-  GoogleIcon,
-  AppleIcon,
-} from "../components/icons/dealerLoginIcons";
 import banner from "../public/signupbanner.png";
 import People from "../public/profile.png";
 import { userSignup } from "../Firebase";
 
 import Router from "next/router";
-import { AuthContext } from "../store/AuthProvider/AuthProvider";
+import { AuthContext } from "../Context/AuthProvider/AuthProvider";
 
 const Signup = () => {
   const signupValidationSchema = yup.object().shape({
@@ -40,7 +35,7 @@ const Signup = () => {
     <div className="p-10 flex  bg-[#F7FAF8]">
       {/* left */}
 
-      <div className=" p-10   rounded-xl border-0 bg-[#FFF]  text-black w-full sm:p-4">
+      <div className=" p-10 flex flex-col justify-center  rounded-xl border-0 bg-[#FFF]  text-black w-full sm:p-4">
         <div className="my-5  ">
           <div className="">
             <h1 className="text-3xl font-bold text-center">
@@ -112,8 +107,8 @@ const Signup = () => {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="bg-[#105E26] p-3 text-white w-full mt-2 rounded shadow-md shadow-[#105E26]"
-                >
+                  className="bg-primary p-3 text-white w-full mt-2 rounded shadow-md shadow-primary"
+                  >
                   Signup
                 </button>
               </div>
@@ -122,25 +117,13 @@ const Signup = () => {
         </Formik>
         <div className=" mt-6 ">
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            Already have an Account?
-            <a href="/" className="text-[#105e26]">
+            Already have an Account?{" "}
+            <a href="/" className="text-[#081b33]">
               Login here{" "}
             </a>{" "}
           </p>
         </div>
-        <div className=" mt-6 ">
-          {/* <h1 className="text-center text-md font-bold my-2">
-            Connect with Social
-          </h1>
-          <div className="flex justify-center space-x-4 my-2">
-            <FacebookIcon /> <GoogleIcon /> <AppleIcon />
-          </div>
-          <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            By signing in to your account, you agree to use
-            <a className="text-[#105e26]">ZoneMates </a> and
-            <a className="text-[#105e26]">Terms of Service. </a>
-                </p>*/}
-        </div>
+     
       </div>
 
       {/* right */}

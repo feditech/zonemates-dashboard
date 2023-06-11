@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../../store/AppProvider/AppProvider";
+import { AppContext } from "../../Context/AppProvider/AppProvider";
 import Map from "../map";
 import ProfileSettingTab from "./ProfileSettingTab";
 import SchedulerTab from "./SchedulerTab";

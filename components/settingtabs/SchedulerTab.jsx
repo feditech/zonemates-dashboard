@@ -1,14 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../store/AppProvider/AppProvider";
+import { AppContext } from "../../Context/AppProvider/AppProvider";
 import { db, doc, setDoc, getDoc, updateDoc } from "../../Firebase";
 import { toast } from "react-toastify";
+import { boolean } from "yup";
 
 const SchedulerTab = () => {
   const { userData } = useContext(AppContext);
   const [openingHours, setOpeningHours] = useState({
-     });
+    Monday: { opening: "10:00", closing: "15:00", closed: false },
+    Tuesday: { opening: "10:00", closing: "15:00", closed: false },
+    Wednesday: { opening: "10:00", closing: "15:00", closed: false },
+    Thursday: { opening: "10:00", closing: "15:00", closed: false },
+    Friday: { opening: "10:00", closing: "15:00", closed: false },
+    Saturday: { opening: "10:00", closing: "15:00", closed: false },
+    Sunday: { opening: "10:00", closing: "15:00", closed: false },
 
-  // console.log("User Data", userData?.openingHours)
+  });
+  //    console.log(" userData?", userData)
+  // console.log(" userData?.openingHours", userData?.openingHours)
+  // console.log("openingHours", openingHours)
 
   useEffect(() => {
     const fetchOpeningHours = async () => {
@@ -39,7 +49,6 @@ const SchedulerTab = () => {
             Friday: { opening: "10:00", closing: "15:00", closed: false },
             Saturday: { opening: "10:00", closing: "15:00", closed: false },
             Sunday: { opening: "10:00", closing: "15:00", closed: false },
-         
           });
         }
       } catch (error) {
@@ -51,14 +60,18 @@ const SchedulerTab = () => {
   }, []);
 
   const handleHourChange = (day, field, value) => {
-    let hour = value.slice(0, 2) + ":00"; // Extract only the hours and set minutes to 00
-    console.log("valueee", value);
-    console.log("hour", hour);
+    console.log("TYPE OF VALUE", typeof value)
+    let fieldValue;
+    if (typeof value != 'boolean') {
+      fieldValue = value?.slice(0, 2) + ":00"; // Extract only the hours and set minutes to 00
+    } else {
+      fieldValue = value;
+    }
     setOpeningHours((prevOpeningHours) => ({
       ...prevOpeningHours,
       [day]: {
         ...prevOpeningHours[day],
-        [field]: hour,
+        [field]: fieldValue,
       },
     }));
   };
@@ -109,6 +122,7 @@ const SchedulerTab = () => {
 
       toast("Opening hours and slots saved to Firebase!");
     } catch (error) {
+      toast("Error saving opening hours and slots to Firebase: ")
       console.error("Error saving opening hours and slots to Firebase: ", error);
     }
   };

@@ -4,9 +4,9 @@ import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import { DropDownIcon } from "../icons/navbarIcons";
 import { LogoutIcon } from "../icons";
-import { AuthContext } from "../../store/AuthProvider/AuthProvider";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
 import { Logout } from "../../Firebase";
-import { AppContext } from "../../store/AppProvider/AppProvider";
+import { AppContext } from "../../Context/AppProvider/AppProvider";
 const ProfileDropDown = () => {
 
   const { userData } = useContext(AppContext)

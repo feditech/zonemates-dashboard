@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
     const IsLoggedin = window.localStorage.getItem("isLoggedIn")
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("hereww Auth context got user");
+        // console.log("hereww Auth context got user");
         setUser(user);
         window.localStorage.setItem("isLoggedIn", true);
       } else {

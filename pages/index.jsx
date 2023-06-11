@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import banner from "../public/loginbanner.png";
 import { userLogin } from "../Firebase";
 import Router from "next/router";
-import { AuthContext } from "../store/AuthProvider/AuthProvider";
+import { AuthContext } from "../Context/AuthProvider/AuthProvider";
 
 const Login = () => {
   const loginValidationSchema = yup.object().shape({
