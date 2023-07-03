@@ -94,7 +94,7 @@ const Login = () => {
             Don't have an Account?{" "}
             <a href="/signup" className="text-primary">
               Signup here{" "}
-            </a>{" "}
+            </a>
           </p>
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
             <a href="/forgotPassword" className="text-primary">

@@ -97,8 +97,6 @@ const ProfileSettingTab = () => {
   };
 
   const handleSubmit = async () => {
-
-
     if (!zoneName) {
       toast("Invalid Zone Name");
       return;
@@ -212,7 +210,6 @@ const ProfileSettingTab = () => {
       className="tab-pane fade show active"
       id="tabs-homeVertical"
       role="tabpanel"
-      aria-labelledby="tabs-home-tabVertical"
     >
       <div className="flex gap-4">
         <div className="mb-6  text-gray-900 border bg-[#F8FBFE]  rounded-lg p-2 w-1/2">
@@ -484,27 +481,33 @@ const ProfileSettingTab = () => {
             Add Game
           </button>
         </form>
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-2">
           {topGames &&
             topGames.map((game, index) => {
               return (
                 <div key={index}>
-                  <h2>{game?.name}</h2>
-                  <p>{game?.genre}</p>
-                  <p>{game?.intro}</p>
+                  <div className="my-4 h-28">
+                    <h2>{game?.name}</h2>
+                    <p>{game?.genre}</p>
+                    <p>{game?.intro}</p>
+                  </div>
                   {/* <Image alt={game?.name} src={game?.image} height={20} width={20} /> */}
-                  {game?.image && (
-                    <Image
-                      src={
-                        typeof game.image == "string"
-                          ? game.image
-                          : URL.createObjectURL(game?.image)
-                      }
-                      alt={game?.name}
-                      className="h-40 w-56"
-                      height={720} width={720}
-                    />
-                  )}
+                  <div className="h-56 w-full overflow-hidden">
+                    {game?.image && (
+                      <Image
+                        src={
+                          typeof game.image == "string"
+                            ? game.image
+                            : URL.createObjectURL(game?.image)
+                        }
+                        alt={game?.name}
+                        // style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+                      className="h-full w-full object-cover "
+                      width={720}
+                      height={300}
+                      />
+                    )}
+                  </div>
                   <button
                     className="border border-[#D2D6DC] rounded-lg py-2 px-4 mx-auto my-2
               hover:bg-red-600 hover:text-white

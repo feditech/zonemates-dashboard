@@ -1,6 +1,5 @@
 export { default as ReviewsIcon } from "./ReviewsIcon";
 export { default as HomeIcon } from "./HomeIcon";
-export { default as MarketAnalysis } from "./MarketAnalysis";
 export { default as CollapsIcon } from "./CollapsIcon";
 
 export { default as LogoutIcon } from "./LogoutIcon";

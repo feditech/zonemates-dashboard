@@ -141,9 +141,9 @@ const SchedulerTab = () => {
               <th className="w-1/4 py-2 px-4 text-left font-semibold">
                 Closing Time
               </th>
-              <th className="w-1/4 py-2 px-4 text-left font-semibold">
+              {/* <th className="w-1/4 py-2 px-4 text-left font-semibold">
                 Closed
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -169,7 +169,7 @@ const SchedulerTab = () => {
                       }
                     />
                   </td>
-                  <td className="py-2 px-4">
+                  {/* <td className="py-2 px-4">
                     <input
                       type="checkbox"
                       checked={openingHours[day].closed}
@@ -177,7 +177,7 @@ const SchedulerTab = () => {
                         handleHourChange(day, "closed", e.target.checked)
                       }
                     />
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}

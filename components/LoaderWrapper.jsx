@@ -4,8 +4,10 @@ import { useRouter } from 'next/router';
 import { ThreeDots } from 'react-loader-spinner';
 
 const LoaderWrapper = ({ children }) => {
+
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const { userData } = useContext(AppContext)
 
     useEffect(() => {
         const handleStart = () => {
@@ -27,22 +29,23 @@ const LoaderWrapper = ({ children }) => {
         };
     }, [router]);
 
-    const { userData } = useContext(AppContext)
 
-    if (!userData && (router.asPath !== '/' && router.asPath !== '/signup')) {
-        return <div className='flex justify-center items-center min-h-screen'>
-            <ThreeDots
-                height="80"
-                width="80"
-                radius="9"
-                color="#081B33"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClassName=""
-                visible={true}
-            />
-        </div>
-    }
+
+
+    useEffect(() => {
+        if (!userData && !['/', '/signup', '/forgotPassword'].includes(router.pathname)) {
+            // Redirect to the login page or any other page if the user is not signed in
+          router.push('/');
+        }
+      }, [userData, router]);
+    
+      if (!userData && !['/', '/signup', '/forgotPassword'].includes(router.pathname)) {
+        return null; // Return null to prevent rendering the content until redirection occurs
+      }
+
+
+
+
 
     if (loading) {
         return (

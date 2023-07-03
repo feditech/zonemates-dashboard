@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import dynamic from "next/dynamic";
 import { AppContext } from "../Context/AppProvider/AppProvider";
-import moment from "moment";
+
 const ApexCustomChart = dynamic(
   () => import("../components/charts/ApexCustomChart"),
   {
@@ -16,16 +16,13 @@ const Dashboard = () => {
   console.log("bookings", bookings)
   // Transforming booking data
   const bookingData = bookings?.map(booking => ({
-    x: moment(booking?.bookingDate?.seconds * 1000).format("MM-DD-YYYY"),
+    x: booking?.bookingDate,
     y: booking.pcCount,
   }));
   // Setting up chart options and data
   const chartOptions = {
     chart: {
       type: 'bar',
-    },
-    xaxis: {
-      type: 'datetime',
     },
     plotOptions: {
       bar: {
@@ -38,12 +35,13 @@ const Dashboard = () => {
             },
           ],
         },
+        columnWidth: "10%",
       },
     },
   };
   const chartSeries = [
     {
-      data: bookingData,
+      data: bookingData || [],
     },
   ];
   return (
