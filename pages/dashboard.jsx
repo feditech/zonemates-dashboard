@@ -16,7 +16,7 @@ const Dashboard = () => {
   console.log("bookings", bookings)
   // Transforming booking data
   const bookingData = bookings?.map(booking => ({
-    x: booking?.bookingDate,
+    x: booking?.date,
     y: booking.pcCount,
   }));
   // Setting up chart options and data
@@ -37,6 +37,7 @@ const Dashboard = () => {
         },
         columnWidth: "10%",
       },
+      
     },
   };
   const chartSeries = [

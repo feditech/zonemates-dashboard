@@ -46,6 +46,7 @@ const ProfileSettingTab = () => {
     userData?.topGames ? userData?.topGames : []
   );
 
+  console.log("top games",topGames)
   const handleAddService = (event) => {
     console.log("type of event", typeof event);
     event.preventDefault();
@@ -172,6 +173,9 @@ const ProfileSettingTab = () => {
             toast("Error uploading image");
             return;
           }
+        }
+        else{
+          newTopgames.push(topGames[i]);
         }
       }
       updatedUser.topGames = newTopgames;
