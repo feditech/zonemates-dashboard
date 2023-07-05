@@ -7,6 +7,7 @@ import { userSignup } from "../Firebase";
 
 import Router from "next/router";
 import { AuthContext } from "../Context/AuthProvider/AuthProvider";
+import Link from "next/link";
 
 const Signup = () => {
   const signupValidationSchema = yup.object().shape({
@@ -118,9 +119,9 @@ const Signup = () => {
         <div className=" mt-6 ">
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
             Already have an Account?{" "}
-            <a href="/" className="text-[#081b33]">
+            <Link href="/" className="text-[#081b33]">
               Login here{" "}
-            </a>{" "}
+            </Link>{" "}
           </p>
         </div>
      

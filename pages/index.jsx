@@ -5,6 +5,7 @@ import banner from "../public/loginbanner.png";
 import { userLogin } from "../Firebase";
 import Router from "next/router";
 import { AuthContext } from "../Context/AuthProvider/AuthProvider";
+import Link from "next/link";
 
 const Login = () => {
   const loginValidationSchema = yup.object().shape({
@@ -91,15 +92,15 @@ const Login = () => {
         </Formik>
         <div className=" mt-6 ">
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            Don't have an Account?{" "}
-            <a href="/signup" className="text-primary">
+            Don&apos;t have an Account?{" "}
+            <Link href="/signup" className="text-primary">
               Signup here{" "}
-            </a>
+            </Link>
           </p>
           <p className="text-md text-[#707070] text-center my-2 sm:text-sm sm:mt-4">
-            <a href="/forgotPassword" className="text-primary">
+            <Link href="/forgotPassword" className="text-primary">
               Forgot Password?{" "}
-            </a>{" "}
+            </Link>{" "}
           </p>
         </div>
       </div>
